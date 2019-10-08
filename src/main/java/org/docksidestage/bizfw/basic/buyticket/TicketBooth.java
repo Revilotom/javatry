@@ -47,12 +47,9 @@ public class TicketBooth {
         int price = isOneDay ? ONE_DAY_PRICE : TWO_DAY_PRICE;
         int quant = isOneDay ? quantity : twoDayQuantity;
 
-
         if (quant <= 0) {
             throw new TicketSoldOutException("Sold out");
         }
-
-//        int price = isOneDay ? ONE_DAY_PRICE : TWO_DAY_PRICE;
 
         if (money < price) {
             throw new TicketShortMoneyException("Short money: " + money);

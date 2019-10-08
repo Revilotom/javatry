@@ -63,4 +63,8 @@ public class Cat extends Animal implements FastRunner {
             super.downHitPoint();
         }
     }
+    @Override
+    public void poop() {
+        System.out.println("I'm cute so nobody minds~~~");
+    }
 }

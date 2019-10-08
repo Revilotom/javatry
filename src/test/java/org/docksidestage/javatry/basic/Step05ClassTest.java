@@ -15,11 +15,10 @@
  */
 package org.docksidestage.javatry.basic;
 
-import org.docksidestage.bizfw.basic.buyticket.Ticket;
-import org.docksidestage.bizfw.basic.buyticket.TicketBooth;
+import org.docksidestage.bizfw.basic.buyticket.*;
 import org.docksidestage.bizfw.basic.buyticket.TicketBooth.TicketShortMoneyException;
-import org.docksidestage.bizfw.basic.buyticket.TicketBuyResult;
 import org.docksidestage.unit.PlainTestCase;
+import org.junit.Test;
 
 /**
  * The test of class. <br>
@@ -194,6 +193,19 @@ public class Step05ClassTest extends PlainTestCase {
      */
     public void test_class_moreFix_useInterface() {
         // your confirmation code here
+        OneDayTicket oneDayTicket = new OneDayTicket();
+        oneDayTicket.doinPark();
+        try{
+
+            oneDayTicket.doinPark();
+        }
+        catch (IllegalStateException e){
+            System.out.println("caught");
+        }
+
+        PluralDayTicket twoDays = new PluralDayTicket(2, 2000);
+        twoDays.doinPark();
+        twoDays.doinPark();
     }
 
     /**
@@ -202,6 +214,9 @@ public class Step05ClassTest extends PlainTestCase {
      */
     public void test_class_moreFix_wonder() {
         // your confirmation code here
+        PluralDayTicket fourDayTicket = new PluralDayTicket(4, 22400);
+        fourDayTicket.doinPark();
+        System.out.println(fourDayTicket.getDisplayPrice());
     }
 
     /**

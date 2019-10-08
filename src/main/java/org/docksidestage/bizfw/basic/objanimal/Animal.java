@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * The object for animal(動物).
  * @author jflute
  */
-public abstract class Animal implements Loudable {
+public abstract class Animal implements Loudable, Poops {
 
     // ===================================================================================
     //                                                                          Definition

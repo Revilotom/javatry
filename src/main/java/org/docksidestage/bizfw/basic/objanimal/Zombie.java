@@ -36,6 +36,11 @@ public class Zombie extends Animal {
     protected int getInitialHitPoint() {
         return -1; // magic number for infinity hit point
     }
+    @Override
+    public void poop() {
+        System.out.println("Grrrrrr");
+
+    }
 
     public static class ZombieDiary {
 
