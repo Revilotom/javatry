@@ -39,7 +39,7 @@ public class Step05ClassTest extends PlainTestCase {
         TicketBooth booth = new TicketBooth();
         booth.buyOneDayPassport(7400);
         int sea = booth.getQuantity();
-        log(sea); // your answer? => 
+        log(sea); // your answer? =>
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
