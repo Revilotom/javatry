@@ -23,37 +23,58 @@ public class TicketBooth {
     // ===================================================================================
     //                                                                          Definition
     //                                                                          ==========
+    private static final int MAX_TWO_DAY = 10;
     private static final int MAX_QUANTITY = 10;
     private static final int ONE_DAY_PRICE = 7400; // when 2019/06/15
+    private static final int TWO_DAY_PRICE = 13200; // when 2019/06/15
 
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
     private int quantity = MAX_QUANTITY;
+    private int twoDayQuantity = MAX_TWO_DAY;
     private Integer salesProceeds;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
     public TicketBooth() {
+        salesProceeds = new Integer(0);
+
     }
 
-    // ===================================================================================
-    //                                                                          Buy Ticket
-    //                                                                          ==========
-    public void buyOneDayPassport(int handedMoney) {
-        if (quantity <= 0) {
+    private void buyPassportLogic(int money, boolean isOneDay){
+        int price = isOneDay ? ONE_DAY_PRICE : TWO_DAY_PRICE;
+        int quant = isOneDay ? quantity : twoDayQuantity;
+
+
+        if (quant <= 0) {
             throw new TicketSoldOutException("Sold out");
         }
-        --quantity;
-        if (handedMoney < ONE_DAY_PRICE) {
-            throw new TicketShortMoneyException("Short money: " + handedMoney);
+
+//        int price = isOneDay ? ONE_DAY_PRICE : TWO_DAY_PRICE;
+
+        if (money < price) {
+            throw new TicketShortMoneyException("Short money: " + money);
         }
-        if (salesProceeds != null) {
-            salesProceeds = salesProceeds + handedMoney;
-        } else {
-            salesProceeds = handedMoney;
+
+        salesProceeds += price;
+
+        if (isOneDay){
+            quantity--;
+        }else{
+            twoDayQuantity--;
         }
+    }
+
+    public Ticket buyOneDayPassport(int money) {
+        buyPassportLogic(money, true);
+        return new Ticket(ONE_DAY_PRICE, true);
+    }
+    public TicketBuyResult buyTwoDayPassport(int money) {
+        buyPassportLogic(money, false);
+        int change=  money - TWO_DAY_PRICE;
+        return new TicketBuyResult(new Ticket(TWO_DAY_PRICE, false), change);
     }
 
     public static class TicketSoldOutException extends RuntimeException {

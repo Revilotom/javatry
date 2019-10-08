@@ -16,6 +16,8 @@
 package org.docksidestage.javatry.basic;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.docksidestage.unit.PlainTestCase;
@@ -162,6 +164,8 @@ public class Step02IfForTest extends PlainTestCase {
     public void test_iffor_making() {
         List<String> clean = new ArrayList<>();
 
+//        prepareStageList().stream().filter(x -> x.contains("a"));
+
         prepareStageList().forEach(item -> {
             if (item.contains("a")){
                 clean.add(item);
@@ -182,29 +186,35 @@ public class Step02IfForTest extends PlainTestCase {
     public void test_iffor_refactor_foreach_to_forEach() {
         List<String> stageList = prepareStageList();
         String sea = null;
-
         List<String> blahList = new ArrayList<>();
 
         stageList.forEach(stage ->{
-            if (stage.contains("ga")){
+            if (stage.contains("ga") &&
+                    !stage.startsWith("br") &&
+                    blahList.isEmpty()){
+
                 blahList.add(stage);
             }
         });
 
-        if (blahList.size() > 0){
+        if (blahList.size() == 0){
+            sea = stageList.get(stageList.size() -1 );
+        }
+        else{
             sea = blahList.get(0);
         }
 
-//        for (String stage : stageList) {
-//            if (stage.startsWith("br")) {
-//                continue;
-//            }
-//            sea = stage;
-//            if (stage.contains("ga")) {
-//                break;
-//            }
-//        }
         log(sea); // should be same as before-fix
+
+        //        for (String stage : stageList) {
+        //            if (stage.startsWith("br")) {
+        //                continue;
+        //            }
+        //            sea = stage;
+        //            if (stage.contains("ga")) {
+        //                break;
+        //            }
+        //        }
     }
 
     /**

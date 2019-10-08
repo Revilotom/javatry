@@ -23,14 +23,16 @@ public class Ticket {
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
+    private boolean isOneDay;
     private final int displayPrice;
     private boolean alreadyIn;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public Ticket(int displayPrice) {
+    public Ticket(int displayPrice, boolean isOneDay) {
         this.displayPrice = displayPrice;
+        this.isOneDay = isOneDay;
     }
 
     // ===================================================================================
@@ -52,5 +54,9 @@ public class Ticket {
 
     public boolean isAlreadyIn() {
         return alreadyIn;
+    }
+
+    public boolean isOneDayTicket(){
+        return isOneDay;
     }
 }
