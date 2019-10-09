@@ -43,6 +43,7 @@ public class TicketBooth {
 
     }
 
+    // TODO 今のcodeだとOneDayとTwoDayのチケットしか買うことができない...。FourDayのチケットも買えるようにしてみよう by もってぃ
     private void buyPassportLogic(int money, boolean isOneDay){
         int price = isOneDay ? ONE_DAY_PRICE : TWO_DAY_PRICE;
         int quant = isOneDay ? quantity : twoDayQuantity;
