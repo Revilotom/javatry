@@ -325,7 +325,10 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_parseMap_flat() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<StandardColorBox> standardColorBoxes = colorBoxList.stream().filter(x -> x instanceof StandardColorBox).map(x -> (StandardColorBox)x).collect(Collectors.toList());
-
+        YourPrivateRoom.SecretBox d = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream().filter(x -> x.getColor().getColorName().equals("white")).map(x -> x.getUpperSpace()).collect(
+                Collectors.toList()
+        ).get(0).getContent());
+        System.out.println(d.getText());
     }
 
     /**
@@ -333,5 +336,15 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (whiteのカラーボックスのmiddleおよびlowerスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
      */
     public void test_parseMap_nested() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<StandardColorBox> standardColorBoxes = colorBoxList.stream().filter(x -> x instanceof StandardColorBox).map(x -> (StandardColorBox)x).collect(Collectors.toList());
+        YourPrivateRoom.SecretBox d = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream().filter(x -> x.getColor().getColorName().equals("white")).map(x -> x.getMiddleSpace()).collect(
+                Collectors.toList()
+        ).get(0).getContent());
+        YourPrivateRoom.SecretBox d1 = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream().filter(x -> x.getColor().getColorName().equals("white")).map(x -> x.getLowerSpace()).collect(
+                Collectors.toList()
+        ).get(0).getContent());
+        System.out.println(d.getText());
+        System.out.println(d1.getText());
     }
 }
