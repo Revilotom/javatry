@@ -79,9 +79,9 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 .collect(Collectors.toList());
 
         int maxLength = strings.stream().max(Comparator.comparingInt(o -> o.length())).get().length();
-        System.out.println(maxLength);
+        log(maxLength);
         Set<String> maxes = strings.stream().filter(x -> x.length() == maxLength).collect(Collectors.toSet());
-        System.out.println(maxes);
+        log(maxes);
     }
 
     /**
@@ -100,7 +100,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
 
         int maxLength = strings.stream().max(Comparator.comparingInt(o -> o.length())).get().length();
         int minLength = strings.stream().min(Comparator.comparingInt(o -> o.length())).get().length();
-        System.out.println(maxLength - minLength);
+        log(maxLength - minLength);
     }
 
     /**
@@ -121,7 +121,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
 
         Set<String> maxes = strings.stream().filter(x -> x.length() == secondMax).collect(Collectors.toSet());
 
-        System.out.println(maxes);
+        log(maxes);
     }
 
     /**
@@ -138,7 +138,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 .map(x -> x.toString())
                 .collect(Collectors.toList());
         int sum = strings.stream().map(x -> x.length()).mapToInt(Integer::intValue).sum();
-        System.out.println(sum);
+        log(sum);
     }
 
     /**
@@ -150,9 +150,9 @@ public class Step11ClassicStringTest extends PlainTestCase {
         List<String> colours = colorBoxList.stream().map(x -> x.getColor().getColorName()).collect(Collectors.toList());
 
         int maxLength = colours.stream().max(Comparator.comparingInt(o -> o.length())).get().length();
-        System.out.println(maxLength);
+        log(maxLength);
         Set<String> maxes = colours.stream().filter(x -> x.length() == maxLength).collect(Collectors.toSet());
-        System.out.println(maxes);
+        log(maxes);
     }
 
     // ===================================================================================
@@ -170,7 +170,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                         .anyMatch(y -> y.getContent() != null && y.getContent().toString().startsWith("Water")))
                 .map(x -> x.getColor().getColorName())
                 .collect(Collectors.toList());
-        System.out.println(colours);
+        log(colours);
     }
 
     /**
@@ -183,7 +183,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 .filter(x -> x.getSpaceList().stream().anyMatch(y -> y.getContent() != null && y.getContent().toString().endsWith("front")))
                 .map(x -> x.getColor().getColorName())
                 .collect(Collectors.toList());
-        System.out.println(colours);
+        log(colours);
     }
 
     // ===================================================================================
@@ -203,7 +203,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 .map(x -> x.toString())
                 .collect(Collectors.toList());
         List<String> content = strings.stream().filter(x -> x.endsWith("front")).collect(Collectors.toList());
-        System.out.println(content.get(0).indexOf("front") + 1);
+        log(content.get(0).indexOf("front") + 1);
     }
 
     /**
@@ -220,7 +220,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 .map(x -> x.toString())
                 .collect(Collectors.toList());
         List<String> targets = strings.stream().filter(x -> x.split("ど").length == 3).collect(Collectors.toList());
-        System.out.println(targets.stream().map(x -> x.lastIndexOf("ど") + 1).collect(Collectors.toList()));
+        log(targets.stream().map(x -> x.lastIndexOf("ど") + 1).collect(Collectors.toList()));
     }
     // ===================================================================================
     //                                                                         substring()
@@ -239,7 +239,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 .map(x -> x.toString())
                 .collect(Collectors.toList());
         List<String> content = strings.stream().filter(x -> x.endsWith("front")).collect(Collectors.toList());
-        System.out.println(content.get(0).substring(0, 1));
+        log(content.get(0).substring(0, 1));
     }
 
     /**
@@ -256,7 +256,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 .map(x -> x.toString())
                 .collect(Collectors.toList());
         List<String> content = strings.stream().filter(x -> x.startsWith("Water")).collect(Collectors.toList());
-        System.out.println(content.get(0).substring(content.get(0).length() - 1));
+        log(content.get(0).substring(content.get(0).length() - 1));
     }
 
     // ===================================================================================
@@ -276,7 +276,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 .map(x -> x.toString())
                 .collect(Collectors.toList());
         List<String> content = strings.stream().filter(x -> x.contains("o")).collect(Collectors.toList());
-        System.out.println(content.stream().map(x -> x.replace("o", "").length()).collect(Collectors.toList()).get(0));
+        log(content.stream().map(x -> x.replace("o", "").length()).collect(Collectors.toList()).get(0));
     }
 
     /**
@@ -297,7 +297,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
 
                 }).collect(Collectors.toList());
 
-        System.out.println(paths);
+        log(paths);
     }
 
     // ===================================================================================
@@ -330,7 +330,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
 
             }
         });
-        System.out.println(total.get());
+        log(total.get());
     }
 
     // ===================================================================================
@@ -348,7 +348,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 .map(x -> x.getContent())
                 .map(x -> x.toString())
                 .collect(Collectors.toList());
-        System.out.println(toStrings.stream().filter(x -> x.contains("{") && x.split("}").length == 1).collect(Collectors.toList()));
+        log(toStrings.stream().filter(x -> x.contains("{") && x.split("}").length == 1).collect(Collectors.toList()));
     }
 
     /**
@@ -363,7 +363,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 .map(x -> x.getContent())
                 .map(x -> x.toString())
                 .collect(Collectors.toList());
-        System.out.println(toStrings.stream().filter(x -> x.contains("{") && x.split("}").length > 1).collect(Collectors.toList()));
+        log(toStrings.stream().filter(x -> x.contains("{") && x.split("}").length > 1).collect(Collectors.toList()));
     }
 
     // ===================================================================================
@@ -385,7 +385,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 .collect(Collectors.toList())
                 .get(0)
                 .getContent());
-        System.out.println(d.getText());
+        log(d.getText());
     }
 
     /**
@@ -410,7 +410,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 .collect(Collectors.toList())
                 .get(0)
                 .getContent());
-        System.out.println(d.getText());
-        System.out.println(d1.getText());
+        log(d.getText());
+        log(d1.getText());
     }
 }
