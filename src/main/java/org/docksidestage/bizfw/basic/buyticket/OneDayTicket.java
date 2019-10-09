@@ -1,7 +1,5 @@
 package org.docksidestage.bizfw.basic.buyticket;
 
-import org.docksidestage.bizfw.basic.buyticket.TicketInterface;
-
 public class OneDayTicket implements TicketInterface {
 
     boolean inPark = false;

@@ -30,11 +30,6 @@ public class SimpleDiContainer extends Dog {
     //                                                                Singleton Definition
     //                                                                ====================
     public static final SimpleDiContainer instance = new SimpleDiContainer();
-
-    public static SimpleDiContainer getInstance() {
-        return instance;
-    }
-
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
@@ -45,7 +40,9 @@ public class SimpleDiContainer extends Dog {
     //                                                                         ===========
     private SimpleDiContainer() { // closet for singleton
     }
-
+    public static SimpleDiContainer getInstance() {
+        return instance;
+    }
     // ===================================================================================
     //                                                                  Component Handling
     //                                                                  ==================

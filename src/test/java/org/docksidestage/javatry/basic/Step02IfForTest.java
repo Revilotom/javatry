@@ -16,8 +16,6 @@
 package org.docksidestage.javatry.basic;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.docksidestage.unit.PlainTestCase;
@@ -27,7 +25,7 @@ import org.docksidestage.unit.PlainTestCase;
  * Operate exercise as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りにエクササイズを実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author Tom Oliver
  */
 public class Step02IfForTest extends PlainTestCase {
 
@@ -164,10 +162,10 @@ public class Step02IfForTest extends PlainTestCase {
     public void test_iffor_making() {
         List<String> clean = new ArrayList<>();
 
-//        prepareStageList().stream().filter(x -> x.contains("a"));
+        //        prepareStageList().stream().filter(x -> x.contains("a"));
 
         prepareStageList().forEach(item -> {
-            if (item.contains("a")){
+            if (item.contains("a")) {
                 clean.add(item);
             }
         });
@@ -188,19 +186,16 @@ public class Step02IfForTest extends PlainTestCase {
         String sea = null;
         List<String> blahList = new ArrayList<>();
 
-        stageList.forEach(stage ->{
-            if (stage.contains("ga") &&
-                    !stage.startsWith("br") &&
-                    blahList.isEmpty()){
+        stageList.forEach(stage -> {
+            if (stage.contains("ga") && !stage.startsWith("br") && blahList.isEmpty()) {
 
                 blahList.add(stage);
             }
         });
 
-        if (blahList.size() == 0){
-            sea = stageList.get(stageList.size() -1 );
-        }
-        else{
+        if (blahList.size() == 0) {
+            sea = stageList.get(stageList.size() - 1);
+        } else {
             sea = blahList.get(0);
         }
 
@@ -225,13 +220,13 @@ public class Step02IfForTest extends PlainTestCase {
      * your question here (ここにあなたの質問を):
      *
      * Please print only the odd natural numbers up to and including 10
-     * 
+     *
      * _/_/_/_/_/_/_/_/_/_/
      * </pre>
      */
     public void test_iffor_yourExercise() {
-        for (int i = 0; i < 11; i++){
-            if (i%2 > 0){
+        for (int i = 0; i < 11; i++) {
+            if (i % 2 > 0) {
                 log(i);
             }
         }

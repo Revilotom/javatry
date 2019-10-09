@@ -71,7 +71,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         // your answer? =>  yes
 
         // cannot reassign because it is used at callback process
-//        name = "wave";
+        //        name = "wave";
     }
 
     /**
@@ -86,27 +86,11 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         log("lost river");
         // your answer? => harbor, broadway, dockside, hangar, lost river
     }
-
-    private class St8BasicConsumer implements Consumer<String> {
-
-        private final String title;
-
-        public St8BasicConsumer(String title) {
-            this.title = title;
-        }
-
-        @Override
-        public void accept(String stage) {
-            log(stage + ": " + title);
-        }
-    }
-
     private void helpCallbackConsumer(Consumer<String> oneArgLambda) {
         log("broadway");
         oneArgLambda.accept("dockside");
         log("hangar");
     }
-
     /**
      * What string is sea variable at the method end? <br>
      * (メソッド終了時の変数 sea の中身は？)
@@ -118,14 +102,9 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         });
         log(sea); // your answer? => number: 7
     }
-
     private String helpCallbackFunction(Function<Integer, String> oneArgLambda) {
         return oneArgLambda.apply(7);
     }
-
-    // -----------------------------------------------------
-    //                                         Convert Style
-    //                                         -------------
     /**
      * Change callback style like this:
      * <pre>
@@ -141,23 +120,22 @@ public class Step08Java8FunctionTest extends PlainTestCase {
      * </pre>
      */
     public void test_java8_lambda_convertStyle_basic() {
-        helpCallbackSupplier( () ->{
+        helpCallbackSupplier(() -> {
             return "broadway";
         });
 
         helpCallbackSupplier(() -> "dockside");
 
-        helpCallbackSupplier(() -> { return"hangar";});
+        helpCallbackSupplier(() -> { return "hangar";});
     }
 
+    // -----------------------------------------------------
+    //                                         Convert Style
+    //                                         -------------
     private void helpCallbackSupplier(Supplier<String> oneArgLambda) {
         String supplied = oneArgLambda.get();
         log(supplied);
     }
-
-    // ===================================================================================
-    //                                                                            Optional
-    //                                                                            ========
     /**
      * Are the strings by three log() methods same? (yes or no) <br>
      * (三つのlog()によって出力される文字列は同じでしょうか？ (yes or no))
@@ -178,6 +156,9 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         // your answer? =>  yes
     }
 
+    // ===================================================================================
+    //                                                                            Optional
+    //                                                                            ========
     /**
      * Are the strings by two log() methods same? (yes or no) <br>
      * (二つのlog()によって出力される文字列は同じでしょうか？ (yes or no))
@@ -193,7 +174,6 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         });
         // your answer? => yes
     }
-
     /**
      * What string is sea, land, piari, bonvo, dstore, amba variables at the method end? <br>
      * (メソッド終了時の変数 sea, land, piari, bonvo, dstore, amba の中身は？)
@@ -241,7 +221,6 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         log(dstore); // your answer? => *no reason
         log(amba); // your answer? => 12
     }
-
     /**
      * What string is sea variables at the method end? <br>
      * (メソッド終了時の変数 sea の中身は？)
@@ -260,10 +239,6 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         }
         log(sea); // your answer? => wave
     }
-
-    // ===================================================================================
-    //                                                                          Stream API
-    //                                                                          ==========
     /**
      * What string is sea, land variables at the method end? <br>
      * (メソッド終了時の変数 sea, land の中身は？)
@@ -287,6 +262,9 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         log(land); // your answer? => [broadway, dockside]
     }
 
+    // ===================================================================================
+    //                                                                          Stream API
+    //                                                                          ==========
     /**
      * What string is sea, variables at the method end? <br>
      * (メソッド終了時の変数 sea の中身は？)
@@ -301,6 +279,20 @@ public class Step08Java8FunctionTest extends PlainTestCase {
                 .distinct()
                 .sum();
         log(sea); // your answer? =>  600
+    }
+
+    private class St8BasicConsumer implements Consumer<String> {
+
+        private final String title;
+
+        public St8BasicConsumer(String title) {
+            this.title = title;
+        }
+
+        @Override
+        public void accept(String stage) {
+            log(stage + ": " + title);
+        }
     }
 
     // *Stream API will return at Step12 again, it's worth the wait!

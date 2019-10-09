@@ -16,9 +16,7 @@
 package org.docksidestage.javatry.basic;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
 
 import org.docksidestage.bizfw.basic.supercar.SupercarClient;
 import org.docksidestage.javatry.basic.st7.St7ConstructorChallengeException;
@@ -29,7 +27,7 @@ import org.docksidestage.unit.PlainTestCase;
  * Operate as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りに実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author Tom Oliver
  */
 public class Step07ExceptionTest extends PlainTestCase {
 
@@ -95,12 +93,10 @@ public class Step07ExceptionTest extends PlainTestCase {
      * (new java.io.File(".") の canonical path を取得してログに表示、I/Oエラーはメッセージとスタックトレースを代わりに)
      */
     public void test_exception_checkedException_basic() {
-        try
-        {
+        try {
             File f = new File(".");
             log(f.getCanonicalPath());
-        }
-        catch ( IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -176,7 +172,6 @@ public class Step07ExceptionTest extends PlainTestCase {
             //
             // _/_/_/_/_/_/_/_/_/_/
 
-
         }
     }
 
@@ -213,7 +208,7 @@ public class Step07ExceptionTest extends PlainTestCase {
         try {
             helpThrowIllegalState();
         } catch (IllegalStateException e) {
-            throw new St7ConstructorChallengeException("Failed to do the cleaning. " , e);
+            throw new St7ConstructorChallengeException("Failed to do the cleaning. ", e);
         }
     }
 

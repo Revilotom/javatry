@@ -20,11 +20,11 @@ package org.docksidestage.bizfw.basic.buyticket;
  */
 public class Ticket {
 
+    private final int displayPrice;
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
     private boolean isOneDay;
-    private final int displayPrice;
     private boolean alreadyIn;
 
     // ===================================================================================
@@ -56,7 +56,7 @@ public class Ticket {
         return alreadyIn;
     }
 
-    public boolean isOneDayTicket(){
+    public boolean isOneDayTicket() {
         return isOneDay;
     }
 }

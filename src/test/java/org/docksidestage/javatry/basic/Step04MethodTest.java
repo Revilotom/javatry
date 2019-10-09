@@ -25,11 +25,16 @@ import org.docksidestage.unit.PlainTestCase;
  * @author Tom Oliver
  */
 public class Step04MethodTest extends PlainTestCase {
-    private boolean availableLogging =  true;
+    private boolean availableLogging = true;
 
     // ===================================================================================
     //                                                                         Method Call
     //                                                                         ===========
+    // ===================================================================================
+    //                                                                   Instance Variable
+    //                                                                   =================
+    private int inParkCount;
+    private boolean hasAnnualPassport;
     /**
      * What string is sea variable at the method end? <br>
      * (メソッド終了時の変数 sea の中身は？)
@@ -38,7 +43,6 @@ public class Step04MethodTest extends PlainTestCase {
         String sea = supplySomething();
         log(sea); // your answer? => over
     }
-
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_method_call_many() {
         String sea = functionSomething("mystic");
@@ -46,28 +50,23 @@ public class Step04MethodTest extends PlainTestCase {
         runnableSomething();
         log(sea); // your answer? => mysmys
     }
-
     private String functionSomething(String name) {
         String replaced = name.replace("tic", "mys");
         log("in function: {}", replaced);
         return replaced;
     }
-
     private String supplySomething() {
         String sea = "over";
         log("in supply: {}", sea);
         return sea;
     }
-
     private void consumeSomething(String sea) {
         log("in consume: {}", sea.replace("over", "mystic"));
     }
-
     private void runnableSomething() {
         String sea = "outofshadow";
         log("in runnable: {}", sea);
     }
-
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_method_object() {
         St4MutableStage mutable = new St4MutableStage();
@@ -79,33 +78,12 @@ public class Step04MethodTest extends PlainTestCase {
         }
         log(sea); // your answer? => 910
     }
-
     private int helloMutable(int sea, Boolean land, St4MutableStage piari) {
         sea++;
         land = true;
         piari.setStageName("mystic");
         return sea;
     }
-
-    private static class St4MutableStage {
-
-        private String stageName;
-
-        public String getStageName() {
-            return stageName;
-        }
-
-        public void setStageName(String stageName) {
-            this.stageName = stageName;
-        }
-    }
-
-    // ===================================================================================
-    //                                                                   Instance Variable
-    //                                                                   =================
-    private int inParkCount;
-    private boolean hasAnnualPassport;
-
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_method_instanceVariable() {
         hasAnnualPassport = true;
@@ -118,36 +96,29 @@ public class Step04MethodTest extends PlainTestCase {
         sea = inParkCount;
         log(sea); // your answer? => 100
     }
-
     private void offAnnualPassport(boolean hasAnnualPassport) {
         hasAnnualPassport = false;
     }
-
     private void goToPark() {
         if (hasAnnualPassport) {
             ++inParkCount;
         }
     }
-
-    // ===================================================================================
-    //                                                                           Challenge
-    //                                                                           =========
-    // write instance variables here
     /**
      * Make private methods as followings, and comment out caller program in test method:
      * <pre>
-     * o replaceAtoB(): has one argument as String, returns argument replaced "A" with "B" as String 
-     * o replaceCtoB(): has one argument as String, returns argument replaced "C" with "B" as String 
-     * o addPrefix(): has two arguments as String, returns combined first argument with ":" with second argument 
-     * o isAvailableLogging(): no argument, returns private instance variable "availableLogging" initialized as true (also make it)  
+     * o replaceAtoB(): has one argument as String, returns argument replaced "A" with "B" as String
+     * o replaceCtoB(): has one argument as String, returns argument replaced "C" with "B" as String
+     * o addPrefix(): has two arguments as String, returns combined first argument with ":" with second argument
+     * o isAvailableLogging(): no argument, returns private instance variable "availableLogging" initialized as true (also make it)
      * o showSea(): has one argument as String argument, no return, show argument by log()
      * </pre>
      * (privateメソッドを以下のように定義して、テストメソッド内の呼び出しプログラムをコメントアウトしましょう):
      * <pre>
-     * o replaceAtoB(): 一つのString引数、引数を "A" を "B" に置き換えらたStringを戻す 
-     * o replaceCtoB(): 一つのString引数、引数を "C" を "B" に置き換えらたStringを戻す 
-     * o addPrefix(): 二つのString引数、第一引数と ":" と第二引数を連結したものを戻す 
-     * o isAvailableLogging(): 引数なし、privateのインスタンス変数 "availableLogging" (初期値:true) を戻す (それも作る)  
+     * o replaceAtoB(): 一つのString引数、引数を "A" を "B" に置き換えらたStringを戻す
+     * o replaceCtoB(): 一つのString引数、引数を "C" を "B" に置き換えらたStringを戻す
+     * o addPrefix(): 二つのString引数、第一引数と ":" と第二引数を連結したものを戻す
+     * o isAvailableLogging(): 引数なし、privateのインスタンス変数 "availableLogging" (初期値:true) を戻す (それも作る)
      * o showSea(): 一つのString引数、戻り値なし、引数をlog()で表示する
      * </pre>
      */
@@ -159,6 +130,11 @@ public class Step04MethodTest extends PlainTestCase {
             showSea(sea);
         }
     }
+
+    // ===================================================================================
+    //                                                                           Challenge
+    //                                                                           =========
+    // write instance variables here
     private void showSea(String sea) {
         log(sea);
     }
@@ -173,6 +149,19 @@ public class Step04MethodTest extends PlainTestCase {
     }
     private String replaceAtoB(String abc) {
         return abc.replace("A", "B");
+    }
+
+    private static class St4MutableStage {
+
+        private String stageName;
+
+        public String getStageName() {
+            return stageName;
+        }
+
+        public void setStageName(String stageName) {
+            this.stageName = stageName;
+        }
     }
 
     // write methods here

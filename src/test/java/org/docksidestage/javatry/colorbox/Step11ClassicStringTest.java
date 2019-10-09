@@ -17,7 +17,10 @@ package org.docksidestage.javatry.colorbox;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -68,12 +71,16 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_length_findMax() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-        List<String> strings = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
+        List<String> strings = spaces.stream()
+                .filter(x -> x.getContent() != null)
+                .map(x -> x.getContent())
+                .filter(x -> x instanceof String)
+                .map(x -> x.toString())
+                .collect(Collectors.toList());
 
         int maxLength = strings.stream().max(Comparator.comparingInt(o -> o.length())).get().length();
         System.out.println(maxLength);
-        Set<String> maxes = strings.stream().filter(x -> x.length() == maxLength).collect(
-                Collectors.toSet());
+        Set<String> maxes = strings.stream().filter(x -> x.length() == maxLength).collect(Collectors.toSet());
         System.out.println(maxes);
     }
 
@@ -84,7 +91,12 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_length_findMaxMinDiff() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-        List<String> strings = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
+        List<String> strings = spaces.stream()
+                .filter(x -> x.getContent() != null)
+                .map(x -> x.getContent())
+                .filter(x -> x instanceof String)
+                .map(x -> x.toString())
+                .collect(Collectors.toList());
 
         int maxLength = strings.stream().max(Comparator.comparingInt(o -> o.length())).get().length();
         int minLength = strings.stream().min(Comparator.comparingInt(o -> o.length())).get().length();
@@ -98,13 +110,16 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_length_findSecondMax() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-        List<String> strings = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).map(x -> x.toString()).collect(Collectors.toList());
+        List<String> strings = spaces.stream()
+                .filter(x -> x.getContent() != null)
+                .map(x -> x.getContent())
+                .map(x -> x.toString())
+                .collect(Collectors.toList());
         int maxLength = strings.stream().max(Comparator.comparingInt(o -> o.length())).get().length();
         List<String> leftOvers = strings.stream().filter(x -> x.length() < maxLength).collect(Collectors.toList());
         int secondMax = leftOvers.stream().max(Comparator.comparingInt(o -> o.length())).get().length();
 
-        Set<String> maxes = strings.stream().filter(x -> x.length() == secondMax).collect(
-                Collectors.toSet());
+        Set<String> maxes = strings.stream().filter(x -> x.length() == secondMax).collect(Collectors.toSet());
 
         System.out.println(maxes);
     }
@@ -116,7 +131,12 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_length_calculateLengthSum() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-        List<String> strings = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
+        List<String> strings = spaces.stream()
+                .filter(x -> x.getContent() != null)
+                .map(x -> x.getContent())
+                .filter(x -> x instanceof String)
+                .map(x -> x.toString())
+                .collect(Collectors.toList());
         int sum = strings.stream().map(x -> x.length()).mapToInt(Integer::intValue).sum();
         System.out.println(sum);
     }
@@ -131,8 +151,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
 
         int maxLength = colours.stream().max(Comparator.comparingInt(o -> o.length())).get().length();
         System.out.println(maxLength);
-        Set<String> maxes = colours.stream().filter(x -> x.length() == maxLength).collect(
-                Collectors.toSet());
+        Set<String> maxes = colours.stream().filter(x -> x.length() == maxLength).collect(Collectors.toSet());
         System.out.println(maxes);
     }
 
@@ -146,10 +165,11 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_startsWith_findFirstWord() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<String> colours = colorBoxList.stream()
-                .filter(x -> x.getSpaceList().stream()
-                        .anyMatch(y -> y.getContent() != null &&
-                                y.getContent().toString().startsWith("Water")))
-                .map(x -> x.getColor().getColorName()).collect(Collectors.toList());
+                .filter(x -> x.getSpaceList()
+                        .stream()
+                        .anyMatch(y -> y.getContent() != null && y.getContent().toString().startsWith("Water")))
+                .map(x -> x.getColor().getColorName())
+                .collect(Collectors.toList());
         System.out.println(colours);
     }
 
@@ -160,10 +180,9 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_endsWith_findLastWord() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<String> colours = colorBoxList.stream()
-                .filter(x -> x.getSpaceList().stream()
-                        .anyMatch(y -> y.getContent() != null &&
-                                y.getContent().toString().endsWith("front")))
-                .map(x -> x.getColor().getColorName()).collect(Collectors.toList());
+                .filter(x -> x.getSpaceList().stream().anyMatch(y -> y.getContent() != null && y.getContent().toString().endsWith("front")))
+                .map(x -> x.getColor().getColorName())
+                .collect(Collectors.toList());
         System.out.println(colours);
     }
 
@@ -177,7 +196,12 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_indexOf_findIndex() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-        List<String> strings = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
+        List<String> strings = spaces.stream()
+                .filter(x -> x.getContent() != null)
+                .map(x -> x.getContent())
+                .filter(x -> x instanceof String)
+                .map(x -> x.toString())
+                .collect(Collectors.toList());
         List<String> content = strings.stream().filter(x -> x.endsWith("front")).collect(Collectors.toList());
         System.out.println(content.get(0).indexOf("front") + 1);
     }
@@ -208,9 +232,14 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_substring_findFirstChar() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-        List<String> strings = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
+        List<String> strings = spaces.stream()
+                .filter(x -> x.getContent() != null)
+                .map(x -> x.getContent())
+                .filter(x -> x instanceof String)
+                .map(x -> x.toString())
+                .collect(Collectors.toList());
         List<String> content = strings.stream().filter(x -> x.endsWith("front")).collect(Collectors.toList());
-        System.out.println(content.get(0).substring(0,1));
+        System.out.println(content.get(0).substring(0, 1));
     }
 
     /**
@@ -220,9 +249,14 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_substring_findLastChar() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-        List<String> strings = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
+        List<String> strings = spaces.stream()
+                .filter(x -> x.getContent() != null)
+                .map(x -> x.getContent())
+                .filter(x -> x instanceof String)
+                .map(x -> x.toString())
+                .collect(Collectors.toList());
         List<String> content = strings.stream().filter(x -> x.startsWith("Water")).collect(Collectors.toList());
-        System.out.println(content.get(0).substring(content.get(0).length()-1));
+        System.out.println(content.get(0).substring(content.get(0).length() - 1));
     }
 
     // ===================================================================================
@@ -235,7 +269,12 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_replace_remove_o() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-        List<String> strings = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
+        List<String> strings = spaces.stream()
+                .filter(x -> x.getContent() != null)
+                .map(x -> x.getContent())
+                .filter(x -> x instanceof String)
+                .map(x -> x.toString())
+                .collect(Collectors.toList());
         List<String> content = strings.stream().filter(x -> x.contains("o")).collect(Collectors.toList());
         System.out.println(content.stream().map(x -> x.replace("o", "").length()).collect(Collectors.toList()).get(0));
     }
@@ -247,16 +286,16 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_replace_fileseparator() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-        List<String> paths = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).filter(x -> x instanceof File).map(x -> {
-            try {
-                return ((File) x).getCanonicalPath().replace("/","\\");
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "";
-            }
+        List<String> paths =
+                spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).filter(x -> x instanceof File).map(x -> {
+                    try {
+                        return ((File) x).getCanonicalPath().replace("/", "\\");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return "";
+                    }
 
-        }
-        ).collect(Collectors.toList());
+                }).collect(Collectors.toList());
 
         System.out.println(paths);
     }
@@ -271,7 +310,12 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_welcomeToDevil() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-        List<YourPrivateRoom.DevilBox> devilBoxes = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).filter(x -> x instanceof YourPrivateRoom.DevilBox).map(x -> (YourPrivateRoom.DevilBox) x).collect(Collectors.toList());
+        List<YourPrivateRoom.DevilBox> devilBoxes = spaces.stream()
+                .filter(x -> x.getContent() != null)
+                .map(x -> x.getContent())
+                .filter(x -> x instanceof YourPrivateRoom.DevilBox)
+                .map(x -> (YourPrivateRoom.DevilBox) x)
+                .collect(Collectors.toList());
 
         AtomicInteger total = new AtomicInteger();
 
@@ -280,10 +324,9 @@ public class Step11ClassicStringTest extends PlainTestCase {
             x.allowMe();
             x.open();
 
-            try{
+            try {
                 total.addAndGet(x.getText().length());
-            }
-            catch (YourPrivateRoom.DevilBoxTextNotFoundException e){
+            } catch (YourPrivateRoom.DevilBoxTextNotFoundException e) {
 
             }
         });
@@ -300,7 +343,11 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_showMap_flat() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-        List<String> toStrings = spaces.stream().filter(x -> x.getContent() != null && x.getContent() instanceof LinkedHashMap).map(x -> x.getContent()).map(x -> x.toString()).collect(Collectors.toList());
+        List<String> toStrings = spaces.stream()
+                .filter(x -> x.getContent() != null && x.getContent() instanceof LinkedHashMap)
+                .map(x -> x.getContent())
+                .map(x -> x.toString())
+                .collect(Collectors.toList());
         System.out.println(toStrings.stream().filter(x -> x.contains("{") && x.split("}").length == 1).collect(Collectors.toList()));
     }
 
@@ -311,7 +358,11 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_showMap_nested() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-        List<String> toStrings = spaces.stream().filter(x -> x.getContent() != null && x.getContent() instanceof LinkedHashMap).map(x -> x.getContent()).map(x -> x.toString()).collect(Collectors.toList());
+        List<String> toStrings = spaces.stream()
+                .filter(x -> x.getContent() != null && x.getContent() instanceof LinkedHashMap)
+                .map(x -> x.getContent())
+                .map(x -> x.toString())
+                .collect(Collectors.toList());
         System.out.println(toStrings.stream().filter(x -> x.contains("{") && x.split("}").length > 1).collect(Collectors.toList()));
     }
 
@@ -324,10 +375,16 @@ public class Step11ClassicStringTest extends PlainTestCase {
      */
     public void test_parseMap_flat() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
-        List<StandardColorBox> standardColorBoxes = colorBoxList.stream().filter(x -> x instanceof StandardColorBox).map(x -> (StandardColorBox)x).collect(Collectors.toList());
-        YourPrivateRoom.SecretBox d = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream().filter(x -> x.getColor().getColorName().equals("white")).map(x -> x.getUpperSpace()).collect(
-                Collectors.toList()
-        ).get(0).getContent());
+        List<StandardColorBox> standardColorBoxes = colorBoxList.stream()
+                .filter(x -> x instanceof StandardColorBox)
+                .map(x -> (StandardColorBox) x)
+                .collect(Collectors.toList());
+        YourPrivateRoom.SecretBox d = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream()
+                .filter(x -> x.getColor().getColorName().equals("white"))
+                .map(x -> x.getUpperSpace())
+                .collect(Collectors.toList())
+                .get(0)
+                .getContent());
         System.out.println(d.getText());
     }
 
@@ -337,13 +394,22 @@ public class Step11ClassicStringTest extends PlainTestCase {
      */
     public void test_parseMap_nested() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
-        List<StandardColorBox> standardColorBoxes = colorBoxList.stream().filter(x -> x instanceof StandardColorBox).map(x -> (StandardColorBox)x).collect(Collectors.toList());
-        YourPrivateRoom.SecretBox d = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream().filter(x -> x.getColor().getColorName().equals("white")).map(x -> x.getMiddleSpace()).collect(
-                Collectors.toList()
-        ).get(0).getContent());
-        YourPrivateRoom.SecretBox d1 = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream().filter(x -> x.getColor().getColorName().equals("white")).map(x -> x.getLowerSpace()).collect(
-                Collectors.toList()
-        ).get(0).getContent());
+        List<StandardColorBox> standardColorBoxes = colorBoxList.stream()
+                .filter(x -> x instanceof StandardColorBox)
+                .map(x -> (StandardColorBox) x)
+                .collect(Collectors.toList());
+        YourPrivateRoom.SecretBox d = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream()
+                .filter(x -> x.getColor().getColorName().equals("white"))
+                .map(x -> x.getMiddleSpace())
+                .collect(Collectors.toList())
+                .get(0)
+                .getContent());
+        YourPrivateRoom.SecretBox d1 = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream()
+                .filter(x -> x.getColor().getColorName().equals("white"))
+                .map(x -> x.getLowerSpace())
+                .collect(Collectors.toList())
+                .get(0)
+                .getContent());
         System.out.println(d.getText());
         System.out.println(d1.getText());
     }

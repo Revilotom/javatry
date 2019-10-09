@@ -41,6 +41,31 @@ public class Zombie extends Animal {
         System.out.println("Grrrrrr");
 
     }
+    // ===================================================================================
+    //                                                                               Bark
+    //                                                                              ======
+    @Override
+    protected void breatheIn() {
+        super.breatheIn();
+        zombieDiary.countBreatheIn();
+    }
+    @Override
+    protected String getBarkWord() {
+        return "uooo"; // what in English?
+    }
+    // ===================================================================================
+    //                                                                           Hit Point
+    //                                                                           =========
+    @Override
+    protected void downHitPoint() {
+        // do nothing, infinity hit point
+    }
+    // ===================================================================================
+    //                                                                            Accessor
+    //                                                                            ========
+    public ZombieDiary getZombieDiary() {
+        return zombieDiary;
+    }
 
     public static class ZombieDiary {
 
@@ -53,34 +78,5 @@ public class Zombie extends Animal {
         public int getBreatheInCount() {
             return breatheInCount;
         }
-    }
-
-    // ===================================================================================
-    //                                                                               Bark
-    //                                                                              ======
-    @Override
-    protected void breatheIn() {
-        super.breatheIn();
-        zombieDiary.countBreatheIn();
-    }
-
-    @Override
-    protected String getBarkWord() {
-        return "uooo"; // what in English?
-    }
-
-    // ===================================================================================
-    //                                                                           Hit Point
-    //                                                                           =========
-    @Override
-    protected void downHitPoint() {
-        // do nothing, infinity hit point
-    }
-
-    // ===================================================================================
-    //                                                                            Accessor
-    //                                                                            ========
-    public ZombieDiary getZombieDiary() {
-        return zombieDiary;
     }
 }

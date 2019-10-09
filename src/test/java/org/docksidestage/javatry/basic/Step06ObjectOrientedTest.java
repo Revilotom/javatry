@@ -35,7 +35,7 @@ import org.docksidestage.unit.PlainTestCase;
  * Operate exercise as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りにエクササイズを実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author Tom Oliver
  */
 public class Step06ObjectOrientedTest extends PlainTestCase {
 
@@ -122,6 +122,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // [ticket booth info]
         //
         TicketBooth booth = new TicketBooth();
+        Ticket ticket = booth.buyOneDayPassport(7400);
 
         // *booth has these properties:
         //int oneDayPrice = 7400;
@@ -132,11 +133,11 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // [buy one-day passport]
         //
         // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-        // #fixme you if step05 has been finished, you can use this code by jflute (2019/06/15)
+        // #fixme Done you if step05 has been finished, you can use this code by jflute (2019/06/15)
         // _/_/_/_/_/_/_/_/_/_/
         //Ticket ticket = booth.buyOneDayPassport(10000);
-        booth.buyOneDayPassport(10000); // as temporary, remove if you finished steo05
-        Ticket ticket = new Ticket(7400, true); // also here
+        //        booth.buyOneDayPassport(10000); // as temporary, remove if you finished steo05
+        //        Ticket ticket = new Ticket(7400, true); // also here
 
         // *buyOneDayPassport() has this process:
         //if (quantity <= 0) {
@@ -345,14 +346,12 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_writing_generalization_extractToAbstract() {
         SQL mysql = new St6MySql();
-        String query=mysql.buildPagingQuery(5, 10);
+        String query = mysql.buildPagingQuery(5, 10);
         assertEquals("limit 45, 5", query);
 
-
         SQL ps = new St6PostgreSql();
-        query=ps.buildPagingQuery(5, 10);
+        query = ps.buildPagingQuery(5, 10);
         assertEquals("offset 45 limit 5", query);
-
 
         // your confirmation code here
     }
@@ -390,7 +389,6 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // your confirmation code here
         BarkingProcess wolf = new Wolf();
         System.out.println(wolf.bark().getBarkWord());
-
 
     }
 

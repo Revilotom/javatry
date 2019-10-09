@@ -1,15 +1,11 @@
 package org.docksidestage.bizfw.basic.objanimal;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public class BarkingProcess extends Animal{
-
+public class BarkingProcess extends Animal {
 
     private static String barkWord;
 
     public BarkingProcess(String barkWord) {
-        this.barkWord = barkWord;
+        BarkingProcess.barkWord = barkWord;
     }
 
     public BarkedSound bark() {

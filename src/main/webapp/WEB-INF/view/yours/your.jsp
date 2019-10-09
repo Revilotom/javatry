@@ -1,5 +1,5 @@
 <html>
 <body>
-    Do you like JSP?
+Do you like JSP?
 </body>
 </html>

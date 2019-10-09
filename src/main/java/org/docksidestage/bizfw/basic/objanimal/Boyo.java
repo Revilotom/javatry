@@ -1,7 +1,5 @@
 package org.docksidestage.bizfw.basic.objanimal;
 
-import org.docksidestage.bizfw.basic.objanimal.Animal;
-
 public class Boyo extends Animal {
     @Override
     public String getBarkWord() {

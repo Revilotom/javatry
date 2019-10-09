@@ -28,8 +28,8 @@ public class MarkHereInfo {
     //                                                                           Attribute
     //                                                                           =========
     protected final String _mark;
-    protected Integer _currentPhaseNumber = 1;
     protected final Map<Integer, MarkHerePhase> _markedPhaseMap = new LinkedHashMap<Integer, MarkHerePhase>();
+    protected Integer _currentPhaseNumber = 1;
 
     // ===================================================================================
     //                                                                         Constructor

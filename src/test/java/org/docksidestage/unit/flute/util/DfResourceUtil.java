@@ -15,16 +15,7 @@
  */
 package org.docksidestage.unit.flute.util;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -211,7 +202,7 @@ public class DfResourceUtil {
         if ("file".equals(url.getProtocol())) {
             int num = path.split("/").length;
             dir = new File(getFileName(url));
-            for (int i = 0; i < num;) {
+            for (int i = 0; i < num; ) {
                 i++;
                 dir = dir.getParentFile();
             }
@@ -244,7 +235,8 @@ public class DfResourceUtil {
         } finally {
             try {
                 fileOutputStream.close();
-            } catch (IOException ignored) {}
+            } catch (IOException ignored) {
+            }
         }
     }
 

@@ -16,8 +16,8 @@
 package org.docksidestage.bizfw.basic.supercar;
 
 import org.docksidestage.bizfw.basic.screw.SpecialScrewManufacturer;
-import org.docksidestage.bizfw.basic.screw.SpecialScrewManufacturer.SpecialScrew;
 import org.docksidestage.bizfw.basic.screw.SpecialScrewManufacturer.ScrewSpec;
+import org.docksidestage.bizfw.basic.screw.SpecialScrewManufacturer.SpecialScrew;
 
 /**
  * The manufacturer(製造業者) of supercar steering wheel(車のハンドル).
@@ -32,10 +32,9 @@ public class SupercarSteeringWheelManufacturer {
     }
 
     public SteeringWheel makeSteeringWheel(Integer steeringWheelId) throws Exception {
-        if (steeringWheelId == 3){
+        if (steeringWheelId == 3) {
             throw new Exception("This steering wheel is unavailable");
         }
-
 
         String specText = componentDB.findClincherSpecText(steeringWheelId);
 

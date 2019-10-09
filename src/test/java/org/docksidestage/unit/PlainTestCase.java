@@ -19,14 +19,10 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 
+import junit.framework.TestCase;
 import org.docksidestage.unit.flute.beanorder.BeanOrderValidator;
 import org.docksidestage.unit.flute.beanorder.ExpectedBeanOrderBy;
 import org.docksidestage.unit.flute.exception.ExceptionExaminer;
@@ -36,8 +32,6 @@ import org.docksidestage.unit.flute.util.DfResourceUtil;
 import org.docksidestage.unit.flute.util.Srl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import junit.framework.TestCase;
 
 /**
  * @author jflute (from UTFlute)
@@ -466,7 +460,7 @@ public abstract class PlainTestCase extends TestCase {
      * <pre>
      * String <span style="color: #553000">str</span> = <span style="color: #70226C">null</span>;
      * <span style="color: #CC4747">assertException</span>(NullPointerException.<span style="color: #70226C">class</span>, () <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> <span style="color: #553000">str</span>.toString());
-     * 
+     *
      * <span style="color: #CC4747">assertException</span>(NullPointerException.<span style="color: #70226C">class</span>, () <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> <span style="color: #553000">str</span>.toString()).<span style="color: #994747">handle</span>(<span style="color: #553000">cause</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     assertContains(<span style="color: #553000">cause</span>.getMessage(), ...);
      * });

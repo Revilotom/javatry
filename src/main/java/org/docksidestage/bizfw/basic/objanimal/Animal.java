@@ -28,7 +28,7 @@ public abstract class Animal implements Loudable, Poops {
     // ===================================================================================
     //                                                                          Definition
     //                                                                          ==========
-     static final Logger logger = LoggerFactory.getLogger(Animal.class);
+    static final Logger logger = LoggerFactory.getLogger(Animal.class);
 
     // ===================================================================================
     //                                                                           Attribute

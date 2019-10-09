@@ -21,14 +21,7 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.bizfw.colorbox.color.BoxColor;
@@ -226,6 +219,25 @@ public class YourPrivateRoom {
     private SecretBox asPrivate(String mapString) {
         return new SecretBox(mapString);
     }
+    // ===================================================================================
+    //                                                                               Devil
+    //                                                                               =====
+    private DevilBox asDevil(String mapString) {
+        return new DevilBox(mapString);
+    }
+
+    // ===================================================================================
+    //                                                                           Interface
+    //                                                                           =========
+    @FunctionalInterface
+    public interface FavoriteProvider {
+
+        String justHere();
+
+        default String notHere() {
+            throw new BittersweetMemorableException("No no no no no...");
+        }
+    }
 
     public static class SecretBox {
 
@@ -250,13 +262,6 @@ public class YourPrivateRoom {
         public String toString() {
             return "{secret}";
         }
-    }
-
-    // ===================================================================================
-    //                                                                               Devil
-    //                                                                               =====
-    private DevilBox asDevil(String mapString) {
-        return new DevilBox(mapString);
     }
 
     public static class DevilBox {
@@ -340,19 +345,6 @@ public class YourPrivateRoom {
         @Override
         public String toString() {
             return "{bitter...}"; // to be closet
-        }
-    }
-
-    // ===================================================================================
-    //                                                                           Interface
-    //                                                                           =========
-    @FunctionalInterface
-    public static interface FavoriteProvider {
-
-        String justHere();
-
-        default String notHere() {
-            throw new BittersweetMemorableException("No no no no no...");
         }
     }
 

@@ -18,14 +18,13 @@ package org.docksidestage.javatry.basic;
 import org.docksidestage.bizfw.basic.buyticket.*;
 import org.docksidestage.bizfw.basic.buyticket.TicketBooth.TicketShortMoneyException;
 import org.docksidestage.unit.PlainTestCase;
-import org.junit.Test;
 
 /**
  * The test of class. <br>
  * Operate exercise as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りにエクササイズを実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author Tom Oliver
  */
 // TODO tom add your name to @author. fix it on other files. by katashin (2019/10/09)
 // @author に自分の名前を書きましょう。他のファイルもよろしくね。
@@ -109,15 +108,15 @@ public class Step05ClassTest extends PlainTestCase {
      * Make method for buying two-day passport (price is 13200). (which can return change as method return value)
      * (TwoDayPassport (金額は13200) も買うメソッドを作りましょう (戻り値でお釣りをちゃんと返すように))
      */
-    public void test_class_letsFix_makeMethod_twoday() {
+    public void test_class_letsFix_makeMethod_twoday() throws Exception {
         // comment out after making the method
         TicketBooth booth = new TicketBooth();
         int money = 14000;
-        // TODO tom remove comment and fix to work it by katashin (2019/10/09)
+        // TODO Done tom remove comment and fix to work it by katashin (2019/10/09)
         // ここはコメントを外して、動くように修正しましょう
-//        int change = booth.buyTwoDayPassport(money);
-//        Integer sea = booth.getSalesProceeds() + change;
-//        log(sea); // should be same as money
+        TicketBuyResult res = booth.buyTwoDayPassport(money);
+        Integer sea = booth.getSalesProceeds() + res.getChange();
+        log(sea); // should be same as money
 
         // and show two-day passport quantity here
     }
@@ -140,7 +139,7 @@ public class Step05ClassTest extends PlainTestCase {
      * (OneDayPassportを買ってもチケットをもらえませんでした。戻り値でTicketクラスを戻すようにしてインしましょう)
      */
     public void test_class_moreFix_return_ticket() throws Exception {
-//         comment out after modifying the method
+        //         comment out after modifying the method
         TicketBooth booth = new TicketBooth();
         Ticket oneDayPassport = booth.buyOneDayPassport(10000);
         log(oneDayPassport.getDisplayPrice()); // should be same as one-day price
@@ -201,15 +200,20 @@ public class Step05ClassTest extends PlainTestCase {
         // your confirmation code here
         OneDayTicket oneDayTicket = new OneDayTicket();
         oneDayTicket.doinPark();
-        try{
+        try {
             oneDayTicket.doinPark();
-            // TODO [challenge] tom using fail() is better, and think why it is better, and write reason. by katashin (2019/10/09)
+            // TODO Done [challenge] tom using fail() is better, and think why it is better, and write reason. by katashin (2019/10/09)
             // fail()メソッドを使うともっと良いと思う。理由も考えて書いてみて欲しい by katashin (2019/10/09)
-        }
-        catch (IllegalStateException e){
-            // TODO [challenge] tom using log() is better. and think why it is better, and write reason. by katashin (2019/10/09)
+
+            // This is to make sure that the code above always throws an exception and does not ever execute the line below.
+            fail("Should never get here");
+        } catch (IllegalStateException e) {
+            // TODO Done [challenge] tom using log() is better. and think why it is better, and write reason. by katashin (2019/10/09)
             // log()メソッドを使うともっと良いと思う。理由も考えてみて欲しい
-            System.out.println("caught");
+
+            // A logger can be used to, for example, redirect output to a file or transform objects into different formats like JSON/XML.
+            // This is more flexible and more easily maintained way of developing rather than using System.out.
+            log("caught");
         }
 
         PluralDayTicket twoDays = new PluralDayTicket(2, 2000);

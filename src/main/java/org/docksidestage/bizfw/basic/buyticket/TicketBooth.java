@@ -34,7 +34,6 @@ public class TicketBooth {
     private static Map<Integer, Integer> priceMap;
     private static Map<Integer, Integer> quantityMap;
 
-
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
@@ -46,23 +45,25 @@ public class TicketBooth {
     //                                                                         Constructor
     //                                                                         ===========
     public TicketBooth() {
-        // TODO Tom In this case, null of salesProceeds had meaning but erased already. write reason why you erased. by katashin (2019/10/09)
+        // TODO Done Tom In this case, null of salesProceeds had meaning but erased already. write reason why you erased. by katashin (2019/10/09)
         // 消されてしまったけど、salesProceeds の nullに意味があったね。 理由を書いてほしい。
-        // TODO Tom IntelliJ mentions warning below code. keep in mind to solve warnings.
+        // Because I dont want to have to check if its initialised or not, it doesn't make sense to have "null" salesProceeds.
+        // TODO Done Tom IntelliJ mentions warning below code. keep in mind to solve warnings.
         // IntelliJが警告を出しているね。消すように心がけてみよう。
-        salesProceeds = new Integer(0);
-        priceMap = new HashMap();
+        // Ok
+        salesProceeds = 0;
+        priceMap = new HashMap<>();
         priceMap.put(1, 7400);
         priceMap.put(2, 13200);
 
-        quantityMap = new HashMap();
+        quantityMap = new HashMap<>();
         quantityMap.put(1, 10);
         quantityMap.put(2, 10);
     }
 
     // TODO Done 今のcodeだとOneDayとTwoDayのチケットしか買うことができない...。FourDayのチケットも買えるようにしてみよう by もってぃ
     private void buyPassportLogic(int money, int days) throws Exception {
-        if (!quantityMap.containsKey(days) || !priceMap.containsKey(days)){
+        if (!quantityMap.containsKey(days) || !priceMap.containsKey(days)) {
             throw new Exception("Unknown ticket day count");
         }
         int quant = quantityMap.get(days);
@@ -87,8 +88,17 @@ public class TicketBooth {
     }
     public TicketBuyResult buyTwoDayPassport(int money) throws Exception {
         buyPassportLogic(money, 2);
-        int change=  money - TWO_DAY_PRICE;
+        int change = money - TWO_DAY_PRICE;
         return new TicketBuyResult(new Ticket(TWO_DAY_PRICE, false), change);
+    }
+    // ===================================================================================
+    //                                                                            Accessor
+    //                                                                            ========
+    public int getQuantity() {
+        return quantity;
+    }
+    public Integer getSalesProceeds() {
+        return salesProceeds;
     }
 
     public static class TicketSoldOutException extends RuntimeException {
@@ -107,16 +117,5 @@ public class TicketBooth {
         public TicketShortMoneyException(String msg) {
             super(msg);
         }
-    }
-
-    // ===================================================================================
-    //                                                                            Accessor
-    //                                                                            ========
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public Integer getSalesProceeds() {
-        return salesProceeds;
     }
 }
