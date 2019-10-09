@@ -21,6 +21,13 @@ import org.docksidestage.bizfw.basic.objanimal.*;
 import org.docksidestage.bizfw.basic.objanimal.loud.AlarmClock;
 import org.docksidestage.bizfw.basic.objanimal.loud.Loudable;
 import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
+import org.docksidestage.javatry.basic.st6.dbms.SQL;
+import org.docksidestage.javatry.basic.st6.dbms.St6MySql;
+import org.docksidestage.javatry.basic.st6.dbms.St6PostgreSql;
+import org.docksidestage.javatry.basic.st6.os.MacOS;
+import org.docksidestage.javatry.basic.st6.os.OS;
+import org.docksidestage.javatry.basic.st6.os.OldWindows;
+import org.docksidestage.javatry.basic.st6.os.Windows;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -337,6 +344,16 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * (St6MySql, St6PostgreSql (basic.st6.dbms) から抽象クラスを抽出してみましょう (スーパークラスとサブクラスの関係に))
      */
     public void test_objectOriented_writing_generalization_extractToAbstract() {
+        SQL mysql = new St6MySql();
+        String query=mysql.buildPagingQuery(5, 10);
+        assertEquals("limit 45, 5", query);
+
+
+        SQL ps = new St6PostgreSql();
+        query=ps.buildPagingQuery(5, 10);
+        assertEquals("offset 45 limit 5", query);
+
+
         // your confirmation code here
     }
 
@@ -346,6 +363,20 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_writing_specialization_extractToConcrete() {
         // your confirmation code here
+        OS mac = new MacOS("tom");
+        assertEquals("tom", mac.getLoginId());
+        assertEquals("/", mac.getSeparator());
+        assertEquals("/Users/tom", mac.getUserDirectory());
+
+        OS win = new Windows("tom");
+        assertEquals("tom", win.getLoginId());
+        assertEquals("\\", win.getSeparator());
+        assertEquals("/Users/tom", win.getUserDirectory());
+
+        OS oldWin = new OldWindows("tom");
+        assertEquals("tom", oldWin.getLoginId());
+        assertEquals("\\", oldWin.getSeparator());
+        assertEquals("/Documents and Settings/tom", oldWin.getUserDirectory());
     }
 
     // ===================================================================================
@@ -357,6 +388,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_writing_withDelegation() {
         // your confirmation code here
+
     }
 
     /**
