@@ -36,7 +36,7 @@ public class Step05ClassTest extends PlainTestCase {
      * What string is sea variable at the method end? <br>
      * (メソッド終了時の変数 sea の中身は？)
      */
-    public void test_class_howToUse_basic() {
+    public void test_class_howToUse_basic() throws Exception {
         TicketBooth booth = new TicketBooth();
         booth.buyOneDayPassport(7400);
         int sea = booth.getQuantity();
@@ -44,7 +44,7 @@ public class Step05ClassTest extends PlainTestCase {
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
-    public void test_class_howToUse_overpay() {
+    public void test_class_howToUse_overpay() throws Exception {
         TicketBooth booth = new TicketBooth();
         booth.buyOneDayPassport(10000);
         Integer sea = booth.getSalesProceeds();
@@ -72,6 +72,8 @@ public class Step05ClassTest extends PlainTestCase {
             fail("always exception but none");
         } catch (TicketShortMoneyException continued) {
             log("Failed to buy one-day passport: money=" + handedMoney, continued);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return booth.getQuantity();
     }
@@ -93,7 +95,7 @@ public class Step05ClassTest extends PlainTestCase {
      * Fix the problem of sales proceeds increased by handed money. (Don't forget to fix also previous exercise answers) <br>
      * (受け取ったお金の分だけ売上が増えていく問題をクラスを修正して解決しましょう (以前のエクササイズのanswerの修正を忘れずに))
      */
-    public void test_class_letsFix_salesProceedsIncrease() {
+    public void test_class_letsFix_salesProceedsIncrease() throws Exception {
         TicketBooth booth = new TicketBooth();
         booth.buyOneDayPassport(10000);
         Integer sea = booth.getSalesProceeds();
@@ -120,7 +122,7 @@ public class Step05ClassTest extends PlainTestCase {
      * Recycle duplicate logics between one-day and two-day by e.g. private method in class. (And confirm result of both before and after) <br>
      * (OneDayとTwoDayで冗長なロジックがあったら、クラス内のprivateメソッドなどで再利用しましょう (修正前と修正後の実行結果を確認))
      */
-    public void test_class_letsFix_refactor_recycle() {
+    public void test_class_letsFix_refactor_recycle() throws Exception {
         TicketBooth booth = new TicketBooth();
         booth.buyOneDayPassport(10000);
         log(booth.getQuantity(), booth.getSalesProceeds()); // should be same as before-fix
@@ -133,7 +135,7 @@ public class Step05ClassTest extends PlainTestCase {
      * Now you cannot get ticket if you buy one-day passport, so return Ticket class and do in-park. <br>
      * (OneDayPassportを買ってもチケットをもらえませんでした。戻り値でTicketクラスを戻すようにしてインしましょう)
      */
-    public void test_class_moreFix_return_ticket() {
+    public void test_class_moreFix_return_ticket() throws Exception {
 //         comment out after modifying the method
         TicketBooth booth = new TicketBooth();
         Ticket oneDayPassport = booth.buyOneDayPassport(10000);
@@ -147,7 +149,7 @@ public class Step05ClassTest extends PlainTestCase {
      * Now also you cannot get ticket if two-day passport, so return class that has ticket and change. <br>
      * (TwoDayPassportもチケットをもらえませんでした。チケットとお釣りを戻すクラスを作って戻すようにしましょう)
      */
-    public void test_class_moreFix_return_whole() {
+    public void test_class_moreFix_return_whole() throws Exception {
         // comment out after modifying the method
         TicketBooth booth = new TicketBooth();
         int handedMoney = 20000;
@@ -161,7 +163,7 @@ public class Step05ClassTest extends PlainTestCase {
      * Now you cannot judge ticket type "one-day or two-day?", so add method to judge it. <br>
      * (チケットをもらってもOneDayなのかTwoDayなのか区別が付きません。区別を付けられるメソッドを追加しましょう)
      */
-    public void test_class_moreFix_type() {
+    public void test_class_moreFix_type() throws Exception {
         // your confirmation code here
 
         TicketBooth booth = new TicketBooth();

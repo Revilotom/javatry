@@ -15,6 +15,9 @@
  */
 package org.docksidestage.bizfw.basic.buyticket;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author jflute
  */
@@ -28,6 +31,10 @@ public class TicketBooth {
     private static final int ONE_DAY_PRICE = 7400; // when 2019/06/15
     private static final int TWO_DAY_PRICE = 13200; // when 2019/06/15
 
+    private static Map<Integer, Integer> priceMap;
+    private static Map<Integer, Integer> quantityMap;
+
+
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
@@ -40,13 +47,22 @@ public class TicketBooth {
     //                                                                         ===========
     public TicketBooth() {
         salesProceeds = new Integer(0);
+        priceMap = new HashMap();
+        priceMap.put(1, 7400);
+        priceMap.put(2, 13200);
 
+        quantityMap = new HashMap();
+        quantityMap.put(1, 10);
+        quantityMap.put(2, 10);
     }
 
-    // TODO 今のcodeだとOneDayとTwoDayのチケットしか買うことができない...。FourDayのチケットも買えるようにしてみよう by もってぃ
-    private void buyPassportLogic(int money, boolean isOneDay){
-        int price = isOneDay ? ONE_DAY_PRICE : TWO_DAY_PRICE;
-        int quant = isOneDay ? quantity : twoDayQuantity;
+    // Done TODO 今のcodeだとOneDayとTwoDayのチケットしか買うことができない...。FourDayのチケットも買えるようにしてみよう by もってぃ
+    private void buyPassportLogic(int money, int days) throws Exception {
+        if (!quantityMap.containsKey(days) || !priceMap.containsKey(days)){
+            throw new Exception("Unknown ticket day count");
+        }
+        int quant = quantityMap.get(days);
+        int price = priceMap.get(days);
 
         if (quant <= 0) {
             throw new TicketSoldOutException("Sold out");
@@ -57,20 +73,16 @@ public class TicketBooth {
         }
 
         salesProceeds += price;
+        quantityMap.put(days, quantity - 1);
 
-        if (isOneDay){
-            quantity--;
-        }else{
-            twoDayQuantity--;
-        }
     }
 
-    public Ticket buyOneDayPassport(int money) {
-        buyPassportLogic(money, true);
+    public Ticket buyOneDayPassport(int money) throws Exception {
+        buyPassportLogic(money, 1);
         return new Ticket(ONE_DAY_PRICE, true);
     }
-    public TicketBuyResult buyTwoDayPassport(int money) {
-        buyPassportLogic(money, false);
+    public TicketBuyResult buyTwoDayPassport(int money) throws Exception {
+        buyPassportLogic(money, 2);
         int change=  money - TWO_DAY_PRICE;
         return new TicketBuyResult(new Ticket(TWO_DAY_PRICE, false), change);
     }

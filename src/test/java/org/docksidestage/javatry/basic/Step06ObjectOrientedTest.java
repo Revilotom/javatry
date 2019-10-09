@@ -117,7 +117,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * Read (analyze) this code and compare with the previous test method, and think "what is object?". <br>
      * (このコードを読んで(分析して)、一つ前のテストメソッドと比べて、「オブジェクトとは何か？」を考えてみましょう)
      */
-    public void test_objectOriented_aboutObject_usingObject() {
+    public void test_objectOriented_aboutObject_usingObject() throws Exception {
         //
         // [ticket booth info]
         //
