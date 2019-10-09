@@ -175,7 +175,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         optMember.ifPresent(member -> {
             log(member.getMemberId(), member.getMemberName());
         });
-        // your answer? => 
+        // your answer? =>  yes
     }
 
     /**
@@ -191,7 +191,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         optMember.ifPresent(member -> {
             log(member.getMemberId(), member.getMemberName());
         });
-        // your answer? => 
+        // your answer? => yes
     }
 
     /**
@@ -234,12 +234,12 @@ public class Step08Java8FunctionTest extends PlainTestCase {
 
         Integer amba = facade.selectMember(2).flatMap(mb -> mb.getWithdrawal()).map(wdl -> wdl.getWithdrawalId()).orElse(-1);
 
-        log(sea); // your answer? => 
-        log(land); // your answer? => 
-        log(piari); // your answer? => 
-        log(bonvo); // your answer? => 
-        log(dstore); // your answer? => 
-        log(amba); // your answer? => 
+        log(sea); // your answer? =>  music
+        log(land); // your answer? => music
+        log(piari); // your answer? =>  music
+        log(bonvo); // your answer? =>  *no reason
+        log(dstore); // your answer? => *no reason
+        log(amba); // your answer? => 12
     }
 
     /**
