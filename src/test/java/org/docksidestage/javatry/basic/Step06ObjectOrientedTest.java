@@ -388,6 +388,9 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_writing_withDelegation() {
         // your confirmation code here
+        BarkingProcess wolf = new Wolf();
+        System.out.println(wolf.bark().getBarkWord());
+
 
     }
 
@@ -396,6 +399,6 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * (ゾンビは動物クラスのサブクラスとして適切でしょうか？30秒だけ考えてみましょう (考えるだけでOK))
      */
     public void test_objectOriented_zoo() {
-        // do nothing here
+        // Its not really alive so I guess not???
     }
 }

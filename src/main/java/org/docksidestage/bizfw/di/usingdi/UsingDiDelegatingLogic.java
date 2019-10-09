@@ -44,7 +44,7 @@ public class UsingDiDelegatingLogic {
     // ===================================================================================
     //                                                                    Supercar Process
     //                                                                    ================
-    public Supercar orderSupercar(String clientRequirement) {
+    public Supercar orderSupercar(String clientRequirement) throws Exception {
         return supercarDealer.orderSupercar(clientRequirement);
     }
 }

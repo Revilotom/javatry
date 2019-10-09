@@ -57,13 +57,13 @@ public class NonDiFactoryMethodAction {
     // ===================================================================================
     //                                                                    Supercar Process
     //                                                                    ================
-    public void goToOffice() {
+    public void goToOffice() throws Exception {
         SupercarDealer dealer = createSupercarDealer();
         Supercar supercar = dealer.orderSupercar("I think...steering wheel is like sea");
         logger.debug("Go to office by {}", supercar);
     }
 
-    public void sendGift() {
+    public void sendGift() throws Exception {
         SupercarDealer dealer = createSupercarDealer();
         Supercar supercar = dealer.orderSupercar("I think...steering wheel is useful on land");
         logger.debug("Send {} to my friend", supercar);
@@ -76,7 +76,7 @@ public class NonDiFactoryMethodAction {
             protected SupercarManufacturer createSupercarManufacturer() {
                 return new SupercarManufacturer() {
                     @Override
-                    public Supercar makeSupercar(String catalogKey) {
+                    public Supercar makeSupercar(String catalogKey) throws Exception {
                         logger.info("...Making supercar by {}", catalogKey); // extension here
                         return super.makeSupercar(catalogKey);
                     }

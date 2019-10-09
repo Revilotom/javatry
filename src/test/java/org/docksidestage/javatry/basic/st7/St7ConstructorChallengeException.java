@@ -23,6 +23,6 @@ public class St7ConstructorChallengeException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     public St7ConstructorChallengeException(String msg) {
-        super(msg);
+        super("St7ConstuctorChallengeException: " + msg);
     }
 }

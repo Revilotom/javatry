@@ -47,12 +47,12 @@ public class UsingDiDelegatingAction {
     // ===================================================================================
     //                                                                    Supercar Process
     //                                                                    ================
-    public void goToOffice() {
+    public void goToOffice() throws Exception {
         Supercar supercar = delegatingLogic.orderSupercar("I think...steering wheel is like sea");
         logger.debug("Go to office by {}", supercar);
     }
 
-    public void sendGift() {
+    public void sendGift() throws Exception {
         Supercar supercar = delegatingLogic.orderSupercar("I think...steering wheel is like sea");
         logger.debug("Send {} to my friend", supercar);
     }

@@ -54,14 +54,14 @@ public class NonDiDirectSecondAction {
     // ===================================================================================
     //                                                                    Supercar Process
     //                                                                    ================
-    public void goToOffice() {
+    public void goToOffice() throws Exception {
         // has exntesion in nested class
         SupercarDealer dealer = new SupercarDealer() {
             @Override
             protected SupercarManufacturer createSupercarManufacturer() {
                 return new SupercarManufacturer() {
                     @Override
-                    public Supercar makeSupercar(String catalogKey) {
+                    public Supercar makeSupercar(String catalogKey) throws Exception {
                         logger.info("...Making supercar by {}", catalogKey);
                         return super.makeSupercar(catalogKey);
                     }
@@ -72,14 +72,14 @@ public class NonDiDirectSecondAction {
         logger.debug("Go to office by {}", supercar);
     }
 
-    public void sendGift() {
+    public void sendGift() throws Exception {
         // also needs same extension here
         SupercarDealer dealer = new SupercarDealer() {
             @Override
             protected SupercarManufacturer createSupercarManufacturer() {
                 return new SupercarManufacturer() {
                     @Override
-                    public Supercar makeSupercar(String catalogKey) {
+                    public Supercar makeSupercar(String catalogKey) throws Exception {
                         logger.info("...Making supercar by {}", catalogKey);
                         return super.makeSupercar(catalogKey);
                     }

@@ -52,13 +52,13 @@ public class NonDiIndividualFactoryAction {
     // ===================================================================================
     //                                                                    Supercar Process
     //                                                                    ================
-    public void goToOffice() { // no change
+    public void goToOffice() throws Exception { // no change
         SupercarDealer dealer = createSupercarDealer();
         Supercar supercar = dealer.orderSupercar("I think...steering wheel is like sea");
         logger.debug("Go to office by {}", supercar);
     }
 
-    public void sendGift() { // no change
+    public void sendGift() throws Exception { // no change
         SupercarDealer dealer = createSupercarDealer();
         Supercar supercar = dealer.orderSupercar("I think...steering wheel is useful on land");
         logger.debug("Send {} to my friend", supercar);

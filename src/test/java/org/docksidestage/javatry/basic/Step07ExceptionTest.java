@@ -17,6 +17,8 @@ package org.docksidestage.javatry.basic;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Arrays;
 
 import org.docksidestage.bizfw.basic.supercar.SupercarClient;
 import org.docksidestage.javatry.basic.st7.St7ConstructorChallengeException;
@@ -96,9 +98,9 @@ public class Step07ExceptionTest extends PlainTestCase {
         try
         {
             File f = new File(".");
-            log(f.getPath());
+            log(f.getCanonicalPath());
         }
-        catch ( NullPointerException e){
+        catch ( IOException e){
             e.printStackTrace();
         }
     }
@@ -121,9 +123,9 @@ public class Step07ExceptionTest extends PlainTestCase {
             Throwable cause = e.getCause();
             sea = cause.getMessage();
             land = cause.getClass().getSimpleName();
-            log(sea); // your answer? => 
-            log(land); // your answer? => 
-            log(e); // your answer? => 
+            log(sea); // your answer? =>  third level
+            log(land); // your answer? =>  illegal argument
+            log(e); // your answer? => number format exception
         }
     }
 
@@ -163,15 +165,18 @@ public class Step07ExceptionTest extends PlainTestCase {
         try {
             new SupercarClient().buySupercar();
             fail("always exception but none");
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             log("*No hint here for training.", e);
             // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
             // What happens? Write situation and cause here. (何が起きた？状況と原因をここに書いてみましょう)
             // - - - - - - - - - -
-            //
+            // Exception is thrown, the reason:
+            // The Kawaii face is not suitable to make a screw.
             //
             //
             // _/_/_/_/_/_/_/_/_/_/
+
+
         }
     }
 
@@ -184,7 +189,7 @@ public class Step07ExceptionTest extends PlainTestCase {
         try {
             new SupercarClient().buySupercar(); // you can fix the classes
             fail("always exception but none");
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             log("*No hint here for training.", e);
         }
     }
@@ -201,6 +206,10 @@ public class Step07ExceptionTest extends PlainTestCase {
             helpSurprisedYabaiCatch();
         } catch (St7ConstructorChallengeException e) {
             log("Thrown by help method", e); // should show also "Caused-by" information
+//            Arrays.asList(e.getStackTrace()).forEach(x -> System.out.println(x.toString()));
+//            e.printStackTrace();
+//            System.out.println(e.getStackTrace().length);
+//            System.out.println(e.);
         }
     }
 

@@ -71,7 +71,7 @@ public class UsingDiModule implements DiContainerModule {
             protected SupercarManufacturer createSupercarManufacturer() {
                 return new SupercarManufacturer() {
                     @Override
-                    public Supercar makeSupercar(String catalogKey) {
+                    public Supercar makeSupercar(String catalogKey) throws Exception {
                         logger.info("...Making supercar by {}", catalogKey); // extension here
                         return super.makeSupercar(catalogKey);
                     }

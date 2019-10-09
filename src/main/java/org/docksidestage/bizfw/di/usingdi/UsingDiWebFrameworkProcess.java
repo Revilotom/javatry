@@ -30,7 +30,7 @@ public class UsingDiWebFrameworkProcess { // like mock of web framework with DI 
         action.callFriend();
     }
 
-    public void requestAccessorGoToOffice() { // e.g. /accessor/gotooffice/
+    public void requestAccessorGoToOffice() throws Exception { // e.g. /accessor/gotooffice/
         UsingDiAccessorAction action = prepareAccessorAction();
         action.goToOffice();
     }
@@ -48,7 +48,7 @@ public class UsingDiWebFrameworkProcess { // like mock of web framework with DI 
         action.callFriend();
     }
 
-    public void requestAnnotationGoToOffice() { // e.g. /annotation/gotooffice/
+    public void requestAnnotationGoToOffice() throws Exception { // e.g. /annotation/gotooffice/
         UsingDiAnnotationAction action = prepareAnnotationAction();
         action.goToOffice();
     }
@@ -66,7 +66,7 @@ public class UsingDiWebFrameworkProcess { // like mock of web framework with DI 
         action.callFriend();
     }
 
-    public void requestDelegatingGoToOffice() { // e.g. /delegating/gotooffice/
+    public void requestDelegatingGoToOffice() throws Exception { // e.g. /delegating/gotooffice/
         UsingDiDelegatingAction action = prepareDelegatingAction();
         action.goToOffice();
     }

@@ -31,8 +31,14 @@ public class SupercarSteeringWheelManufacturer {
         return new SupercarSteeringWheelComponentDB();
     }
 
-    public SteeringWheel makeSteeringWheel(Integer steeringWheelId) {
+    public SteeringWheel makeSteeringWheel(Integer steeringWheelId) throws Exception {
+        if (steeringWheelId == 3){
+            throw new Exception("This steering wheel is unavailable");
+        }
+
+
         String specText = componentDB.findClincherSpecText(steeringWheelId);
+
         ScrewSpec screwSpec = new ScrewSpec(specText);
 
         SpecialScrewManufacturer manufacturer = createSpecialScrewManufacturer();

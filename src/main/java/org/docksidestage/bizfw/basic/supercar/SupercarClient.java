@@ -28,7 +28,7 @@ public class SupercarClient {
 
     private final List<Supercar> myCarList = new ArrayList<>(4);
 
-    public void buySupercar() {
+    public void buySupercar() throws Exception {
         SupercarDealer dealer = createDealer();
         String clientRequirement = "steering wheel is like sea";
         Supercar orderedCustomCar = dealer.orderSupercar(clientRequirement);
