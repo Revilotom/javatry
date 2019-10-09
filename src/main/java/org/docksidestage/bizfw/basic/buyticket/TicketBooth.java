@@ -46,6 +46,10 @@ public class TicketBooth {
     //                                                                         Constructor
     //                                                                         ===========
     public TicketBooth() {
+        // TODO Tom In this case, null of salesProceeds had meaning but erased already. write reason why you erased. by katashin (2019/10/09)
+        // 消されてしまったけど、salesProceeds の nullに意味があったね。 理由を書いてほしい。
+        // TODO Tom IntelliJ mentions warning below code. keep in mind to solve warnings.
+        // IntelliJが警告を出しているね。消すように心がけてみよう。
         salesProceeds = new Integer(0);
         priceMap = new HashMap();
         priceMap.put(1, 7400);
