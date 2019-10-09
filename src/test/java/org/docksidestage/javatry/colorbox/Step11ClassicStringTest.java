@@ -17,15 +17,13 @@ package org.docksidestage.javatry.colorbox;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.bizfw.colorbox.color.BoxColor;
+import org.docksidestage.bizfw.colorbox.impl.StandardColorBox;
 import org.docksidestage.bizfw.colorbox.space.BoxSpace;
 import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
@@ -246,20 +244,22 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * What string is path string of java.io.File in color-boxes, which is replaced with "/" to Windows file separator? <br>
      * カラーボックスに入ってる java.io.File のパス文字列のファイルセパレーターの "/" を、Windowsのファイルセパレーターに置き換えた文字列は？
      */
-//    public void test_replace_fileseparator() {
-//        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
-//        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-//        List<File> files = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).filter(x -> x instanceof File).map(x -> {
-//            try {
-//                return ((File) x).getCanonicalPath().replace("/","\\");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//                    return null;
-//                }
-//        ).collect(Collectors.toList());
-//    }
+    public void test_replace_fileseparator() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
+        List<String> paths = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).filter(x -> x instanceof File).map(x -> {
+            try {
+                return ((File) x).getCanonicalPath().replace("/","\\");
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "";
+            }
+
+        }
+        ).collect(Collectors.toList());
+
+        System.out.println(paths);
+    }
 
     // ===================================================================================
     //                                                                    Welcome to Devil
@@ -269,6 +269,25 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中に入っているDevilBoxクラスのtextの長さの合計は？)
      */
     public void test_welcomeToDevil() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
+        List<YourPrivateRoom.DevilBox> devilBoxes = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).filter(x -> x instanceof YourPrivateRoom.DevilBox).map(x -> (YourPrivateRoom.DevilBox) x).collect(Collectors.toList());
+
+        AtomicInteger total = new AtomicInteger();
+
+        devilBoxes.forEach(x -> {
+            x.wakeUp();
+            x.allowMe();
+            x.open();
+
+            try{
+                total.addAndGet(x.getText().length());
+            }
+            catch (YourPrivateRoom.DevilBoxTextNotFoundException e){
+
+            }
+        });
+        System.out.println(total.get());
     }
 
     // ===================================================================================
@@ -279,6 +298,10 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = value ; ... }" という形式で表示すると？)
      */
     public void test_showMap_flat() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
+        List<String> toStrings = spaces.stream().filter(x -> x.getContent() != null && x.getContent() instanceof LinkedHashMap).map(x -> x.getContent()).map(x -> x.toString()).collect(Collectors.toList());
+        System.out.println(toStrings.stream().filter(x -> x.contains("{") && x.split("}").length == 1).collect(Collectors.toList()));
     }
 
     /**
@@ -286,6 +309,10 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = map:{ key = value ; ... } ; ... }" という形式で表示すると？)
      */
     public void test_showMap_nested() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
+        List<String> toStrings = spaces.stream().filter(x -> x.getContent() != null && x.getContent() instanceof LinkedHashMap).map(x -> x.getContent()).map(x -> x.toString()).collect(Collectors.toList());
+        System.out.println(toStrings.stream().filter(x -> x.contains("{") && x.split("}").length > 1).collect(Collectors.toList()));
     }
 
     // ===================================================================================
@@ -296,6 +323,9 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (whiteのカラーボックスのupperスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
      */
     public void test_parseMap_flat() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<StandardColorBox> standardColorBoxes = colorBoxList.stream().filter(x -> x instanceof StandardColorBox).map(x -> (StandardColorBox)x).collect(Collectors.toList());
+
     }
 
     /**
