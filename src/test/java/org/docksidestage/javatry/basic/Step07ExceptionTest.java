@@ -206,10 +206,6 @@ public class Step07ExceptionTest extends PlainTestCase {
             helpSurprisedYabaiCatch();
         } catch (St7ConstructorChallengeException e) {
             log("Thrown by help method", e); // should show also "Caused-by" information
-//            Arrays.asList(e.getStackTrace()).forEach(x -> System.out.println(x.toString()));
-//            e.printStackTrace();
-//            System.out.println(e.getStackTrace().length);
-//            System.out.println(e.);
         }
     }
 
@@ -217,10 +213,12 @@ public class Step07ExceptionTest extends PlainTestCase {
         try {
             helpThrowIllegalState();
         } catch (IllegalStateException e) {
-            throw new St7ConstructorChallengeException("Failed to do something.");
+            throw new St7ConstructorChallengeException("Failed to do the cleaning. " , e);
         }
     }
 
+    // This message was originally not thrown up to the above exception.
+    // It was fixed so that the entire exception chain can be seen.
     private void helpThrowIllegalState() { // simple implementation here
         throw new IllegalStateException("something illegal");
     }
