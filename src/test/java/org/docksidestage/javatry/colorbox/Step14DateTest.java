@@ -15,8 +15,10 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -141,12 +143,38 @@ public class Step14DateTest extends PlainTestCase {
      */
     public void test_birthdate() {
 
-        int seconds = cleanContent.stream()
+        LocalDate orig = (LocalDate) cleanContent.stream().filter(x -> x instanceof LocalDate).collect(Collectors.toList()).get(0);
+
+        int months = cleanContent.stream()
                 .filter(x -> x instanceof LocalDateTime)
                 .map(x -> (LocalDateTime) x)
                 .mapToInt(x -> (int) x.toEpochSecond(ZoneOffset.UTC))
                 .sum();
 
+        orig = orig.plusMonths(months);
+
+        List<List> listOfLists =
+                cleanContent.stream()
+                        .filter(x -> x instanceof List)
+                            .map(x -> (List)x).collect(Collectors.toList());
+
+        List<BigDecimal> bigDs = (List<BigDecimal>) listOfLists.get(0)
+                .stream()
+                .filter(x -> x instanceof BigDecimal && x.toString().startsWith("3."))
+                .collect(Collectors.toList());
+
+        BigDecimal bD = bigDs.get(0);
+
+        orig = orig.plusDays(Integer.parseInt(bD.toString().substring(2, 3)));
+
+        LocalDate finalOrig = orig;
+        colorBoxList.stream()
+                .filter(x -> x.getColor().getColorName().equals("red"))
+                .forEach(x -> x.getSpaceList().stream()
+                        .filter(y -> y.getContent() instanceof Long).forEach(y -> finalOrig.plusDays((Long)y.getContent())));
+
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        log(finalOrig.format(myFormatObj));
     }
 
     /**
@@ -154,5 +182,12 @@ public class Step14DateTest extends PlainTestCase {
      * (カラーボックスに入っているLocalTimeの秒は？)
      */
     public void test_beReader() {
+
+        cleanContent.stream()
+                .filter(x -> x instanceof LocalTime)
+                .map(x -> (LocalTime) x)
+                .forEach(x -> log(x.getSecond()));
+
+
     }
 }
