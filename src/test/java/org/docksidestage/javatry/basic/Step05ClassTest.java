@@ -227,6 +227,7 @@ public class Step05ClassTest extends PlainTestCase {
      */
     public void test_class_moreFix_wonder() {
         // your confirmation code here
+        // TODO please make buyFourDayPassport method in TicketBoot by ちーかま
         PluralDayTicket fourDayTicket = new PluralDayTicket(4, 22400);
         fourDayTicket.doinPark();
         System.out.println(fourDayTicket.getDisplayPrice());
