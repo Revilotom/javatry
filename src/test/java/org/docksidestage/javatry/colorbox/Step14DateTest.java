@@ -15,13 +15,29 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.docksidestage.bizfw.colorbox.ColorBox;
+import org.docksidestage.bizfw.colorbox.space.BoxSpace;
+import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
  * The test of Date with color-box. <br>
  * Show answer by log() for question of javadoc.
  * @author jflute
- * @author your_name_here
+ * @author Tom Oliver
  */
 public class Step14DateTest extends PlainTestCase {
 
@@ -32,7 +48,23 @@ public class Step14DateTest extends PlainTestCase {
      * What string is date in color-boxes formatted as slash-separated (e.g. 2019/04/24)? <br>
      * (カラーボックスに入っている日付をスラッシュ区切り (e.g. 2019/04/24) のフォーマットしたら？)
      */
+
+
+    List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+    List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
+    List<Object> cleanContent = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).collect(Collectors.toList());
+
     public void test_formatDate() {
+
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        cleanContent.stream().filter(x -> x instanceof LocalDate)
+                .map(x -> (LocalDate)x)
+                .forEach(x -> log(x.format(myFormatObj)));
+
+        cleanContent.stream().filter(x -> x instanceof LocalDateTime)
+                .map(x -> (LocalDateTime)x)
+                .forEach(x -> log(x.format(myFormatObj)));
+
     }
 
     /**
@@ -40,6 +72,25 @@ public class Step14DateTest extends PlainTestCase {
      * (yellowのカラーボックスに入っているSetの中のスラッシュ区切り (e.g. 2019/04/24) の日付文字列をLocalDateに変換してtoString()したら？)
      */
     public void test_parseDate() {
+        List<ColorBox> yellows =
+                colorBoxList.stream().filter(x -> x.getColor().getColorName().equals("yellow")).collect(Collectors.toList());
+        List<BoxSpace> yellowSpaces = yellows.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
+        List<Object> sets = yellowSpaces.stream().map(x -> x.getContent()).filter(x -> x instanceof Set).collect(Collectors.toList());
+        Set<String> set = (Set<String>) sets.get(0);
+
+        set.stream().filter(x  -> x.split("/").length == 3).forEach(x -> {
+            try{
+
+            LocalDate date7 = LocalDate.parse(x, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+            log(date7.toString());
+
+            }
+            catch (DateTimeParseException e){
+
+            }
+        });
+
+
     }
 
     /**
@@ -47,6 +98,10 @@ public class Step14DateTest extends PlainTestCase {
      * (カラーボックスに入っている日付の月を全て足したら？)
      */
     public void test_sumMonth() {
+        int months = 0;
+        months += cleanContent.stream().filter(x -> x instanceof LocalDate).map(x -> (LocalDate) x).mapToInt(x -> (int) x.getMonth().getValue()).sum();
+        months += cleanContent.stream().filter(x -> x instanceof LocalDateTime).map(x -> (LocalDateTime) x).mapToInt(x -> (int) x.getMonth().getValue()).sum();
+        log(months);
     }
 
     /**
@@ -54,6 +109,12 @@ public class Step14DateTest extends PlainTestCase {
      * (カラーボックスに入っている二番目に見つかる日付に3日進めると何曜日？)
      */
     public void test_plusDays_weekOfDay() {
+        cleanContent.stream()
+                .filter(x -> x instanceof LocalDate)
+                .map(x -> (LocalDate) x)
+                .forEach(x -> {
+            log(x.plusDays(3).getDayOfWeek());
+        });
     }
 
     // ===================================================================================
@@ -64,6 +125,11 @@ public class Step14DateTest extends PlainTestCase {
      * (yellowのカラーボックスに入っている二つの日付は何日離れている？)
      */
     public void test_diffDay() {
+
+        int days1 = cleanContent.stream().filter(x -> x instanceof LocalDate).map(x -> (LocalDate) x).mapToInt(x -> (int) x.toEpochDay()).sum();
+        int days2 = cleanContent.stream().filter(x -> x instanceof LocalDateTime).map(x -> (LocalDateTime) x).mapToInt(x -> (int) x.toLocalDate().toEpochDay()).sum();
+        log(days1 - days2);
+
     }
 
     /**
@@ -75,6 +141,11 @@ public class Step14DateTest extends PlainTestCase {
      * redのカラーボックスに入っているLong型を日数として足して、カラーボックスに入っているリストの中のBigDecimalの整数値が3の小数点第一位の数を日数として引いた日付は？)
      */
     public void test_birthdate() {
+
+        int seconds = cleanContent.stream().filter(x -> x instanceof LocalDateTime).map(x -> (LocalDateTime) x).mapToInt(x -> (int) x.toEpochSecond(
+                ZoneOffset.UTC)).sum();
+
+
     }
 
     /**

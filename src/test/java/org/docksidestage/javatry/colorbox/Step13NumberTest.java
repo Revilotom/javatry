@@ -41,7 +41,6 @@ public class Step13NumberTest extends PlainTestCase {
      */
 
     List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
-
     List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
     List<Object> cleanContent = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).collect(Collectors.toList());
 
