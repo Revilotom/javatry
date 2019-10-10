@@ -225,12 +225,13 @@ public class Step05ClassTest extends PlainTestCase {
      * Fix it to be able to buy four-day passport (price is 22400). <br>
      * (FourDayPassport (金額は22400) のチケットも買えるようにしましょう)
      */
-    public void test_class_moreFix_wonder() {
+    public void test_class_moreFix_wonder() throws Exception {
         // your confirmation code here
-        // TODO please make buyFourDayPassport method in TicketBoot by ちーかま
-        PluralDayTicket fourDayTicket = new PluralDayTicket(4, 22400);
-        fourDayTicket.doinPark();
-        System.out.println(fourDayTicket.getDisplayPrice());
+        // TODO Done please make buyFourDayPassport method in TicketBoot by ちーかま
+        TicketBooth booth = new TicketBooth();
+        TicketBuyResult fourDayTicket = booth.buyFourDayPassport(30000);
+        fourDayTicket.getTicket().doInPark();
+        log(fourDayTicket.getChange());
     }
 
     /**

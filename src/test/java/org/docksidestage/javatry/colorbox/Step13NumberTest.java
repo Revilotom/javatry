@@ -15,13 +15,19 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.docksidestage.bizfw.colorbox.ColorBox;
+import org.docksidestage.bizfw.colorbox.space.BoxSpace;
+import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
  * The test of Number with color-box. <br>
  * Show answer by log() for question of javadoc.
  * @author jflute
- * @author your_name_here
+ * @author Tom Oliver
  */
 public class Step13NumberTest extends PlainTestCase {
 
@@ -32,7 +38,19 @@ public class Step13NumberTest extends PlainTestCase {
      * How many integer-type values in color-boxes are between 0 and 54? <br>
      * (カラーボックの中に入っているInteger型で、0から54までの値は何個ある？)
      */
+
+    List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+    List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
+    List<Object> cleanContent = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).collect(Collectors.toList());
+
     public void test_countZeroToFiftyFour_IntegerOnly() {
+        List<Integer> ans = cleanContent.stream()
+                .filter(x -> x instanceof Integer)
+                .map(x -> (Integer) x)
+                .filter(x -> x >= 0 && x <= 54)
+                .collect(Collectors.toList());
+        System.out.println(ans);
     }
 
     /**
@@ -40,6 +58,12 @@ public class Step13NumberTest extends PlainTestCase {
      * (カラーボックの中に入っている数値で、0から54までの値は何個ある？)
      */
     public void test_countZeroToFiftyFour_Number() {
+        List<Number> ans = cleanContent.stream()
+                .filter(x -> x instanceof Number)
+                .map(x -> (Number) x)
+                .filter(x -> x.doubleValue() >= 0 && x.doubleValue() <= 54)
+                .collect(Collectors.toList());
+        System.out.println(ans);
     }
 
     /**

@@ -55,10 +55,12 @@ public class TicketBooth {
         priceMap = new HashMap<>();
         priceMap.put(1, 7400);
         priceMap.put(2, 13200);
+        priceMap.put(4, 22400);
 
         quantityMap = new HashMap<>();
         quantityMap.put(1, 10);
         quantityMap.put(2, 10);
+        quantityMap.put(4, 10);
     }
 
     // TODO Done 今のcodeだとOneDayとTwoDayのチケットしか買うことができない...。FourDayのチケットも買えるようにしてみよう by もってぃ
@@ -90,6 +92,13 @@ public class TicketBooth {
         buyPassportLogic(money, 2);
         int change = money - TWO_DAY_PRICE;
         return new TicketBuyResult(new Ticket(TWO_DAY_PRICE, false), change);
+    }
+
+    public TicketBuyResult buyFourDayPassport(int money) throws Exception {
+        buyPassportLogic(money, 4);
+        int price = priceMap.get(4);
+        int change = money - price;
+        return new TicketBuyResult(new Ticket(price, false), change);
     }
     // ===================================================================================
     //                                                                            Accessor
