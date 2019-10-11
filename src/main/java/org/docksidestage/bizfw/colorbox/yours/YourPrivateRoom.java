@@ -180,6 +180,8 @@ public class YourPrivateRoom {
         colorBox.getUpperSpace().setContent(set);
         colorBox.getMiddleSpace().setContent(new BittersweetMemorableException("nullsidestage", doyoulikeNullPointer()));
         colorBox.getLowerSpace().setContent((FavoriteProvider) () -> "mystic");
+        int callersLineNumber = new Exception().getStackTrace()[1].getLineNumber();
+        System.out.println("Line number that makeEighthColorBox is called at: " + callersLineNumber);
         return colorBox;
     }
 

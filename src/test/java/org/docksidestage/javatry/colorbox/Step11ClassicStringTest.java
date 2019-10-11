@@ -18,6 +18,7 @@ package org.docksidestage.javatry.colorbox;
 import java.util.List;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
+import org.docksidestage.bizfw.colorbox.color.BoxColor;
 import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
@@ -42,13 +43,18 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (最初のカラーボックスの色の名前の文字数は？)
      */
     public void test_length_basic() {
+
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
-        String answer = colorBoxList.stream()
-                .findFirst()
-                .map(colorBox -> colorBox.getColor().getColorName())
-                .map(colorName -> colorName.length() + " (" + colorName + ")")
-                .orElse("*not found");
-        log(answer);
+        if (!colorBoxList.isEmpty()) {
+            ColorBox colorBox = colorBoxList.get(0);
+            BoxColor boxColor = colorBox.getColor();
+            String colorName = boxColor.getColorName();
+            int answer = colorName.length();
+            log(answer + " (" + colorName + ")"); // also show name for visual check
+        } else {
+            log("*not found");
+        }
+
     }
 
     /**

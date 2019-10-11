@@ -16,6 +16,7 @@
 package org.docksidestage.javatry.colorbox;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -91,20 +92,56 @@ public class Step15MiscTypeTest extends PlainTestCase {
     public void test_optionalMapping() {
         List<ColorBox> beige = colorBoxList.stream().filter(x -> x.getColor().getColorName().equals("beige")).collect(Collectors.toList());
 
-        List<Object> spaces = beige.stream() .map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-//        List<Object> spaces = beige.stream() .map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-//
-//
-//
-//        lo.stream()
+        List<BoxSpace> spaces = beige.stream()
+                .map(x -> x.getSpaceList())
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+
+        List<Object> listOfLists =
+                spaces.stream().filter(x -> x.getContent() instanceof List).map(x -> x.getContent()).collect(Collectors.toList());
+
+//        List<Object> BoxedResort = listOfLists.stream().map(x -> (List) x).flatMap(List::stream).collect(Collectors.toList());
+
+        //
+        //List<List> lists =
+//        List<Optional<YourPrivateRoom.BoxedPark>> collect = spaces.stream()
 //                .filter(y -> y.getContent() instanceof List)
-//                    .map(y -> (List)y.getContent()).collect(
-//                                    Collectors.toList()
-//                        )
+//                .map(y -> (List) y.getContent())
+//                .flatMap(List::stream)
+//                .map(y -> ((YourPrivateRoom.BoxedResort) y).getPark())
+//                .collect(Collectors.toList());
 //
+//        collect
+//                .stream()
+//                .filter( y -> ((Optional<YourPrivateRoom.BoxedPark>) y).isPresent())
+//                .map(y -> ((Optional<YourPrivateRoom.BoxedPark>) y).get())
+//                .map(y ->  y.getStage())
+//                .collect(Collectors.toList())
+//                .forEach(t -> log(t));
+
+//        lists.stream().flatMap(l -> l.stream()).map(y -> ((YourPrivateRoom.BoxedResort) y).getPark())
+//                .
+//        lists.forEach(x -> {
+//            Object collect = x.stream()
+//                    .filter(y -> y instanceof YourPrivateRoom.BoxedResort)
+//                    .map(y -> ((YourPrivateRoom.BoxedResort) y).getPark())
+//                    .collect(Collectors.toList());
+//        });
+//        lists.forEach(x -> {
 //
+////            Object collect = x.stream()
+////                    .map(y -> (YourPrivateRoom.BoxedResort) y)
+////                    .map(y -> ()y.)
+////                    .filter(y -> ((Optional) y).isPresent())
+////                    .map(y -> ((Optional) y).get())
+//////                    .map(y -> y.)
+////
+////                    .collect(Collectors.toList());
 //
-//                            .map(y -> (YourPrivateRoom.BoxedResort) y)
+//            System.out.println(collect);
+
+//        });
+
 //                            .map(y -> y.getPark())
 //                            .filter(y -> y.isPresent())
 //                            .map(y -> y.get())
@@ -115,15 +152,8 @@ public class Step15MiscTypeTest extends PlainTestCase {
 //                )
 //                .collect(Collectors.toList())
 //                .forEach(y -> log(y));
-//
 
-        //        log(beige);
-
-
-
-
-
-
+                log(beige);
     }
 
     // ===================================================================================
@@ -135,5 +165,6 @@ public class Step15MiscTypeTest extends PlainTestCase {
      */
     public void test_lineNumber() {
         // Line 51
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
     }
 }

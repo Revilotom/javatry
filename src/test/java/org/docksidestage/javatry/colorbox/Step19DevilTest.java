@@ -15,6 +15,16 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.docksidestage.bizfw.colorbox.ColorBox;
+import org.docksidestage.bizfw.colorbox.space.BoxSpace;
+import org.docksidestage.bizfw.colorbox.space.DoorBoxSpace;
+import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -24,7 +34,18 @@ import org.docksidestage.unit.PlainTestCase;
  * @author your_name_here
  */
 public class Step19DevilTest extends PlainTestCase {
+    List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+    List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
+    List<Object> cleanContent = spaces.stream()
+            .map(x -> {
 
+                if (x instanceof DoorBoxSpace){
+                    ((DoorBoxSpace)x).openTheDoor();
+                }
+                return x.getContent();
+
+            })
+            .collect(Collectors.toList());
     // ===================================================================================
     //                                                                        Devil Parade
     //                                                                        ============
@@ -37,6 +58,7 @@ public class Step19DevilTest extends PlainTestCase {
      * スペースの中のリストの中で最初に見つかるBigDecimalの一の位の数字と同じ色の長さのカラーボックスの一番下のスペースに入っているものは？)
      */
     public void test_too_long() {
+
     }
 
     // ===================================================================================
@@ -46,7 +68,26 @@ public class Step19DevilTest extends PlainTestCase {
      * What string of toString() is BoxSize of red color-box after changing height to 160 (forcedly in this method)? <br>
      * ((このテストメソッドの中だけで無理やり)赤いカラーボックスの高さを160に変更して、BoxSizeをtoString()すると？)
      */
-    public void test_looks_like_easy() {
+
+
+
+    public void test_looks_like_easy() throws NoSuchFieldException, IllegalAccessException {
+        ColorBox redBox = colorBoxList.stream().filter(x -> x.getColor().getColorName().equals("red")).collect(Collectors.toList()).get(0);
+        Field field  = redBox.getSize().getClass().getDeclaredField("height");
+        field.setAccessible(true);
+        field.set(redBox, 160);
+        log(redBox);
+
+//        Object o = (Object)redBox;
+
+//        List<Method> methods =  Arrays.asList(YourPrivateRoom.class.getMethods());
+//        System.out.println(methods.stream()
+//                .filter(method -> method.getName().contains("makeSecondColorbox"))
+//                .collect(Collectors.toList()));
+
+
+
+
     }
 
     // ===================================================================================
@@ -57,5 +98,14 @@ public class Step19DevilTest extends PlainTestCase {
      * (カラーボックスに入っているFunctionalInterfaceアノテーションが付与されているインターフェースのFunctionalメソッドの戻り値は？)
      */
     public void test_be_frameworker() {
+        YourPrivateRoom.FavoriteProvider f = new YourPrivateRoom.FavoriteProvider() {
+            @Override
+            public String justHere() {
+                return null;
+            }
+
+        };
+
+        log(f.justHere()); // In this example null
     }
 }
