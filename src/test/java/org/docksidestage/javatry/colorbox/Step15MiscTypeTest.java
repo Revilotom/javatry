@@ -17,6 +17,7 @@ package org.docksidestage.javatry.colorbox;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.bizfw.colorbox.impl.StandardColorBox;
@@ -88,8 +89,41 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (beigeのカラーボックスに入っているListの中のBoxedResortのBoxedStageのkeywordは？(値がなければ固定の"none"という値を))
      */
     public void test_optionalMapping() {
-//        colorBoxList.stream().filter(x -> x.getColor().getColorName().equals("beige"))
-//                .map(x -> x.getSpaceList().stream().filter(y -> y instanceof List).)
+        List<ColorBox> beige = colorBoxList.stream().filter(x -> x.getColor().getColorName().equals("beige")).collect(Collectors.toList());
+
+        List<Object> spaces = beige.stream() .map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
+//        List<Object> spaces = beige.stream() .map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
+//
+//
+//
+//        lo.stream()
+//                .filter(y -> y.getContent() instanceof List)
+//                    .map(y -> (List)y.getContent()).collect(
+//                                    Collectors.toList()
+//                        )
+//
+//
+//
+//                            .map(y -> (YourPrivateRoom.BoxedResort) y)
+//                            .map(y -> y.getPark())
+//                            .filter(y -> y.isPresent())
+//                            .map(y -> y.get())
+//                            .map(y -> y.getStage())
+//                            .filter(y -> y.isPresent())
+//                            .map(y -> y.get())
+//                            .collect(Collectors.toList())
+//                )
+//                .collect(Collectors.toList())
+//                .forEach(y -> log(y));
+//
+
+        //        log(beige);
+
+
+
+
+
+
     }
 
     // ===================================================================================
@@ -100,5 +134,6 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (getColorBoxList()メソッドの中のmakeEighthColorBox()メソッドを呼び出している箇所の行数は？)
      */
     public void test_lineNumber() {
+        // Line 51
     }
 }
