@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.bizfw.colorbox.impl.StandardColorBox;
 import org.docksidestage.bizfw.colorbox.space.BoxSpace;
+import org.docksidestage.bizfw.colorbox.space.DoorBoxSpace;
 import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
@@ -36,7 +37,17 @@ public class Step15MiscTypeTest extends PlainTestCase {
 
     List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
     List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-    List<Object> cleanContent = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).collect(Collectors.toList());
+    List<Object> cleanContent = spaces.stream()
+            .map(x -> {
+
+                if (x instanceof DoorBoxSpace){
+                    ((DoorBoxSpace)x).openTheDoor();
+                }
+                return x.getContent();
+
+            })
+            .collect(Collectors.toList());
+
     // ===================================================================================
     //                                                                           Exception
     //                                                                           =========
@@ -45,6 +56,7 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (カラーボックスに入っているthrowできるオブジェクトのクラス名は？)
      */
     public void test_throwable() {
+        cleanContent.stream().filter(x -> x instanceof Throwable).forEach(x -> log(x.getClass()));
     }
 
     /**
@@ -52,7 +64,7 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (カラーボックスに入っている例外オブジェクトのネストした例外インスタンスのメッセージは？)
      */
     public void test_nestedException() {
-
+        cleanContent.stream().filter(x -> x instanceof Throwable).forEach(x -> log(((Throwable) x).getCause().getMessage()));
     }
 
     // ===================================================================================
@@ -64,14 +76,8 @@ public class Step15MiscTypeTest extends PlainTestCase {
      */
     public void test_interfaceCall() {
 
-        List<ColorBox> yellow =
-                colorBoxList.stream().filter(x -> x.getColor().getColorName().equals("yellow")).collect(Collectors.toList());
-        StandardColorBox y = (StandardColorBox) yellow.get(0);
-        YourPrivateRoom.FavoriteProvider f = (YourPrivateRoom.FavoriteProvider) y.getLowerSpace().getContent();
-        f.justHere();
-
-
-
+        cleanContent.stream().filter(x -> x instanceof YourPrivateRoom.FavoriteProvider)
+                .forEach(x -> log(((YourPrivateRoom.FavoriteProvider) x).justHere()));
     }
 
     // ===================================================================================
@@ -82,6 +88,8 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (beigeのカラーボックスに入っているListの中のBoxedResortのBoxedStageのkeywordは？(値がなければ固定の"none"という値を))
      */
     public void test_optionalMapping() {
+//        colorBoxList.stream().filter(x -> x.getColor().getColorName().equals("beige"))
+//                .map(x -> x.getSpaceList().stream().filter(y -> y instanceof List).)
     }
 
     // ===================================================================================
