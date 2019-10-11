@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.bizfw.colorbox.space.BoxSpace;
+import org.docksidestage.bizfw.colorbox.space.DoorBoxSpace;
 import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
@@ -49,7 +50,16 @@ public class Step14DateTest extends PlainTestCase {
 
     List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
     List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-    List<Object> cleanContent = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).collect(Collectors.toList());
+    List<Object> cleanContent = spaces.stream()
+            .map(x -> {
+
+                if (x instanceof DoorBoxSpace){
+                    ((DoorBoxSpace)x).openTheDoor();
+                }
+                return x.getContent();
+
+            })
+            .collect(Collectors.toList());
 
     public void test_formatDate() {
 
@@ -184,9 +194,9 @@ public class Step14DateTest extends PlainTestCase {
     public void test_beReader() {
 
         cleanContent.stream()
-                .filter(x -> x instanceof LocalTime)
-                .map(x -> (LocalTime) x)
-                .forEach(x -> log(x.getSecond()));
+            .filter(x -> x instanceof LocalTime)
+            .map(x -> (LocalTime) x)
+            .forEach(x -> log(x.getSecond()));
 
 
     }

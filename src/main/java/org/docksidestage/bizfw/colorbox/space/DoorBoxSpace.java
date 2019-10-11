@@ -49,6 +49,8 @@ public class DoorBoxSpace extends BoxSpace {
             return super.getContent();
         } else {
             damageClosedAccess();
+            System.err.println("NOT OPEN");
+//            throw new Exception("you didnt open the box");
             return isBroken() ? super.getContent() : null;
         }
     }

@@ -15,6 +15,13 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.docksidestage.bizfw.colorbox.ColorBox;
+import org.docksidestage.bizfw.colorbox.impl.StandardColorBox;
+import org.docksidestage.bizfw.colorbox.space.BoxSpace;
+import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -25,6 +32,11 @@ import org.docksidestage.unit.PlainTestCase;
  */
 public class Step15MiscTypeTest extends PlainTestCase {
 
+
+
+    List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+    List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
+    List<Object> cleanContent = spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).collect(Collectors.toList());
     // ===================================================================================
     //                                                                           Exception
     //                                                                           =========
@@ -40,6 +52,7 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (カラーボックスに入っている例外オブジェクトのネストした例外インスタンスのメッセージは？)
      */
     public void test_nestedException() {
+
     }
 
     // ===================================================================================
@@ -50,6 +63,15 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (カラーボックスに入っているFavoriteProviderインターフェースのjustHere()メソッドの戻り値は？)
      */
     public void test_interfaceCall() {
+
+        List<ColorBox> yellow =
+                colorBoxList.stream().filter(x -> x.getColor().getColorName().equals("yellow")).collect(Collectors.toList());
+        StandardColorBox y = (StandardColorBox) yellow.get(0);
+        YourPrivateRoom.FavoriteProvider f = (YourPrivateRoom.FavoriteProvider) y.getLowerSpace().getContent();
+        f.justHere();
+
+
+
     }
 
     // ===================================================================================

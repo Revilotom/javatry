@@ -53,7 +53,7 @@ public class BoxSpace {
     /**
      * @return The contents in color box. (NullAllowed: because of not required)
      */
-    public Object getContent() {
+    public Object getContent(){
         return content;
     }
 
