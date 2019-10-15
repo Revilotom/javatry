@@ -18,6 +18,8 @@ package org.docksidestage.javatry.colorbox;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,7 +61,38 @@ public class Step19DevilTest extends PlainTestCase {
      * スペースの中のリストの中で最初に見つかるBigDecimalの一の位の数字と同じ色の長さのカラーボックスの一番下のスペースに入っているものは？)
      */
     public void test_too_long() {
-//         List<Object> nulls = spaces.stream()
+
+         colorBoxList.stream()
+                .filter(x -> x.getSpaceList()
+                        .stream()
+                        .filter(y -> y.getContent() instanceof List)
+                        .filter(y -> ((List<Object>) y.getContent()).stream()
+                                .filter(z -> z instanceof BigDecimal)
+                                .collect(Collectors.toList())
+                                .size() > 0)
+                        .collect(Collectors.toList())
+                        .size() > 0)
+                .collect(Collectors.toList());
+
+        List<Object> collect = colorBoxList.stream().map(x -> {
+            return x.getSpaceList()
+                    .stream()
+                    .filter(y -> y.getContent() instanceof List)
+                    .filter(y -> ((List<Object>) y.getContent()).stream()
+                            .filter(z -> z instanceof BigDecimal)
+                            .collect(Collectors.toList())
+                            .size() > 0)
+                    .map(y -> (List) y.getContent())
+                    .filter(y -> !y.isEmpty())
+                    .flatMap(y -> y.stream())
+                    .collect(Collectors.toList());
+            //                            System.out.println(obs);
+        }).collect(Collectors.toList());
+
+        //
+//        List<String> bdSecondDP = bds.stream().filter(x -> x.toString().split(".").length > 1)
+//                .map(x -> x.toString().split(".")[1].substring(1, 2)).collect(Collectors.toList());
+
         List<ColorBox> nulls = colorBoxList.stream()
                 .filter(x -> x.getSpaceList().stream().filter(y -> y.getContent() == null).collect(Collectors.toList()).size() > 0)
                 .collect(Collectors.toList());
@@ -68,7 +101,7 @@ public class Step19DevilTest extends PlainTestCase {
 
         List<ColorBox> ends =
                 colorBoxList.stream().filter(x -> x.getColor().getColorName().endsWith(sanMojiMe)).collect(Collectors.toList());
-//        ends.
+//        ends.stream().filter(x -> (x.getSize().getDepth() + "").equals())
 
         log(ends);
 

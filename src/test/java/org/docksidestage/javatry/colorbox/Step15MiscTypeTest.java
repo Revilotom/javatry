@@ -77,7 +77,6 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (カラーボックスに入っているFavoriteProviderインターフェースのjustHere()メソッドの戻り値は？)
      */
     public void test_interfaceCall() {
-
         cleanContent.stream().filter(x -> x instanceof YourPrivateRoom.FavoriteProvider)
                 .forEach(x -> log(((YourPrivateRoom.FavoriteProvider) x).justHere()));
     }
