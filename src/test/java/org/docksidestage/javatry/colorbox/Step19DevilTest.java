@@ -17,6 +17,7 @@ package org.docksidestage.javatry.colorbox;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,19 +76,11 @@ public class Step19DevilTest extends PlainTestCase {
         ColorBox redBox = colorBoxList.stream().filter(x -> x.getColor().getColorName().equals("red")).collect(Collectors.toList()).get(0);
         Field field  = redBox.getSize().getClass().getDeclaredField("height");
         field.setAccessible(true);
-        field.set(redBox, 160);
+        Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+        field.setInt(redBox.getSize(), 160);
         log(redBox);
-
-//        Object o = (Object)redBox;
-
-//        List<Method> methods =  Arrays.asList(YourPrivateRoom.class.getMethods());
-//        System.out.println(methods.stream()
-//                .filter(method -> method.getName().contains("makeSecondColorbox"))
-//                .collect(Collectors.toList()));
-
-
-
-
     }
 
     // ===================================================================================
