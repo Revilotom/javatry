@@ -322,7 +322,7 @@ public class Step12StringStreamTest extends PlainTestCase {
     String getPrettyMap(Map m, boolean nested){
        return "map:{ " +  m.keySet().stream().map(k -> {
            if (m.get(k) instanceof Map && nested){
-               return getPrettyMap((Map) m.get(k), true);
+               return getPrettyMap((Map) m.get(k), true) + ";";
            }
           return k + " = " + m.get(k) + " ;";
        }).collect(Collectors.joining(" ")) + " }";
@@ -353,12 +353,9 @@ public class Step12StringStreamTest extends PlainTestCase {
     Map parse (String s){
 
         Map m = new HashMap();
-
-        if ( s.substring(0, 6).equals("map:{ ")){
+        if (s.substring(0, 6).equals("map:{ ")){
             return parse(s.substring(6));
         }
-
-
 
 
         return new HashMap();
