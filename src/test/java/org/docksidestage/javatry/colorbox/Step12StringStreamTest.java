@@ -350,15 +350,78 @@ public class Step12StringStreamTest extends PlainTestCase {
     // TODO tom Stringの "map:{ dockside = over ; hangar = mystic ; broadway = bbb }" として出力するのではなく、
     //          Stringをparseして Map にしてみよう。(おそらく "{dockside=over,hangar=mystic,broadway=bbb}"と出力されるはず?) by もってぃ
 
-    Map parse (String s){
+    Map parse (Map mapFromAbove, String s){
 
         Map m = new HashMap();
-        if (s.substring(0, 6).equals("map:{ ")){
-            return parse(s.substring(6));
+
+        String temp = subMap(s);
+        if (!temp.equals("")){
+            m = parse(new HashMap(), temp);
         }
 
+        if (s.contains("{")){
+            String[] keys = s.split("\\{")[0].split("=");
+            String key = keys[keys.length - 1].trim();
+            mapFromAbove.put(key, m);
+            return m;
+        }
 
-        return new HashMap();
+        for (String pair: Arrays.asList(s.split(";"))) {
+            String[] splitted = pair.split("=");
+            if (splitted[0].trim().equals("")){
+                continue;
+            }
+            System.out.println(Arrays.toString(splitted));
+            String key = splitted[0].trim();
+            String val = splitted[1].trim();
+            m.put(key, val);
+        }
+
+//        String f = s.split("\\{")[0];
+//        if (f.equals("map:")){
+//
+//        }
+
+
+
+        return m;
+    }
+
+    String subMap(String s){
+        s = s.replace("map:", "");
+        int depth = 0;
+        int index = 0;
+
+        int firstIndex = -1;
+
+        boolean first = true;
+
+        while(index <= s.length() - 1 ){
+            char c = s.charAt(index);
+            if(c == '{'){
+                depth++;
+                if (first){
+                    firstIndex = index;
+                }
+                first = false;
+            }
+            if (c == '}') {
+                depth--;
+            }
+
+            if(!first && depth == 0){
+                break;
+            }
+            index++;
+        }
+
+        return !first ? (s.substring(firstIndex+1, index)) : "";
+    }
+
+    public void test_b(){
+        String s = "map:{ x = y; k = q; a = map:{ b = map:{ t = f; poop = brown; tea = tasty; }; };  z = map:{ c = d}; };";
+//        String s1 = "map:{ x = y; k = q;}";
+        parse(new HashMap(), s);
     }
 
     public void test_parseMap_flat() {
@@ -372,7 +435,10 @@ public class Step12StringStreamTest extends PlainTestCase {
                 .collect(Collectors.toList())
                 .get(0)
                 .getContent());
-        log(d.getText());
+
+//        parse(d.getText());
+        System.out.println();
+//        log(d.getText());
     }
 
     /**
@@ -385,19 +451,23 @@ public class Step12StringStreamTest extends PlainTestCase {
                 .filter(x -> x instanceof StandardColorBox)
                 .map(x -> (StandardColorBox) x)
                 .collect(Collectors.toList());
-        YourPrivateRoom.SecretBox d = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream()
-                .filter(x -> x.getColor().getColorName().equals("white"))
-                .map(x -> x.getMiddleSpace())
-                .collect(Collectors.toList())
-                .get(0)
-                .getContent());
+//        YourPrivateRoom.SecretBox d = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream()
+//                .filter(x -> x.getColor().getColorName().equals("white"))
+//                .map(x -> x.getMiddleSpace())
+//                .collect(Collectors.toList())
+//                .get(0)
+//                .getContent());
         YourPrivateRoom.SecretBox d1 = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream()
                 .filter(x -> x.getColor().getColorName().equals("white"))
                 .map(x -> x.getLowerSpace())
                 .collect(Collectors.toList())
                 .get(0)
                 .getContent());
-        log(d.getText());
-        log(d1.getText());
+//        log(d.getText());
+//        log(d1.getText());
+//
+
+//        parse(d1.getText());
+        System.out.println();
     }
 }
