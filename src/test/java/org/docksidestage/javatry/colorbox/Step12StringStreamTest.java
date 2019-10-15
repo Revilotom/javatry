@@ -17,10 +17,7 @@ package org.docksidestage.javatry.colorbox;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -316,12 +313,19 @@ public class Step12StringStreamTest extends PlainTestCase {
     // TODO tom 今は、MapのtoStringによって "{1-Day Passport=7400, Starlight Passport=5400,... }" というフォーマットで出力されているけど、
     //          これを "map:{ 1-Day Passport = 7400 ; Starlight Passport = 5400 ; ... }"というフォーマットで出力してみよう by もってぃ
     public void test_showMap_flat() {
-        List<String> toStrings =
-                cleanContent.stream()
-                .filter(x -> x instanceof LinkedHashMap)
-                .map(x -> x.toString())
-                .collect(Collectors.toList());
-        log(toStrings.stream().filter(x -> x.contains("{") && x.split("}").length == 1).collect(Collectors.toList()));
+        cleanContent.stream()
+        .filter(x -> x instanceof LinkedHashMap)
+        .map(x -> getPrettyMap((Map)x, false))
+        .forEach(x -> log(x));
+    }
+
+    String getPrettyMap(Map m, boolean nested){
+       return "map:{ " +  m.keySet().stream().map(k -> {
+           if (m.get(k) instanceof Map && nested){
+               return getPrettyMap((Map) m.get(k), true);
+           }
+          return k + " = " + m.get(k) + " ;";
+       }).collect(Collectors.joining(" ")) + " }";
     }
 
     /**
@@ -330,12 +334,10 @@ public class Step12StringStreamTest extends PlainTestCase {
      */
     // TODO tom こちらも上と同じフォーマットで出力してみよう by もってぃ
     public void test_showMap_nested() {
-        List<String> toStrings =
-                cleanContent.stream()
+        cleanContent.stream()
                 .filter(x -> x instanceof LinkedHashMap)
-                .map(x -> x.toString())
-                .collect(Collectors.toList());
-        log(toStrings.stream().filter(x -> x.contains("{") && x.split("}").length > 1).collect(Collectors.toList()));
+                .map(x -> getPrettyMap((Map)x, true))
+                .forEach(x -> log(x));
     }
 
     // ===================================================================================
@@ -347,6 +349,21 @@ public class Step12StringStreamTest extends PlainTestCase {
      */
     // TODO tom Stringの "map:{ dockside = over ; hangar = mystic ; broadway = bbb }" として出力するのではなく、
     //          Stringをparseして Map にしてみよう。(おそらく "{dockside=over,hangar=mystic,broadway=bbb}"と出力されるはず?) by もってぃ
+
+    Map parse (String s){
+
+        Map m = new HashMap();
+
+        if ( s.substring(0, 6).equals("map:{ ")){
+            return parse(s.substring(6));
+        }
+
+
+
+
+        return new HashMap();
+    }
+
     public void test_parseMap_flat() {
         List<StandardColorBox> standardColorBoxes = colorBoxList.stream()
                 .filter(x -> x instanceof StandardColorBox)
