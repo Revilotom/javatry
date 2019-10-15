@@ -16,11 +16,8 @@
 package org.docksidestage.javatry.colorbox;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,16 +36,14 @@ import org.docksidestage.unit.PlainTestCase;
 public class Step19DevilTest extends PlainTestCase {
     List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
     List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
-    List<Object> cleanContent = spaces.stream()
-            .map(x -> {
+    List<Object> cleanContent = spaces.stream().map(x -> {
 
-                if (x instanceof DoorBoxSpace){
-                    ((DoorBoxSpace)x).openTheDoor();
-                }
-                return x.getContent();
+        if (x instanceof DoorBoxSpace) {
+            ((DoorBoxSpace) x).openTheDoor();
+        }
+        return x.getContent();
 
-            })
-            .collect(Collectors.toList());
+    }).collect(Collectors.toList());
     // ===================================================================================
     //                                                                        Devil Parade
     //                                                                        ============
@@ -62,20 +57,8 @@ public class Step19DevilTest extends PlainTestCase {
      */
     public void test_too_long() {
 
-         colorBoxList.stream()
-                .filter(x -> x.getSpaceList()
-                        .stream()
-                        .filter(y -> y.getContent() instanceof List)
-                        .filter(y -> ((List<Object>) y.getContent()).stream()
-                                .filter(z -> z instanceof BigDecimal)
-                                .collect(Collectors.toList())
-                                .size() > 0)
-                        .collect(Collectors.toList())
-                        .size() > 0)
-                .collect(Collectors.toList());
-
-        List<Object> collect = colorBoxList.stream().map(x -> {
-            return x.getSpaceList()
+        List<BigDecimal> bds = colorBoxList.stream().map(x -> {
+            return (List<BigDecimal>) x.getSpaceList()
                     .stream()
                     .filter(y -> y.getContent() instanceof List)
                     .filter(y -> ((List<Object>) y.getContent()).stream()
@@ -85,41 +68,35 @@ public class Step19DevilTest extends PlainTestCase {
                     .map(y -> (List) y.getContent())
                     .filter(y -> !y.isEmpty())
                     .flatMap(y -> y.stream())
+                    .filter(y -> y instanceof BigDecimal)
                     .collect(Collectors.toList());
-            //                            System.out.println(obs);
-        }).collect(Collectors.toList());
-
-        //
-//        List<String> bdSecondDP = bds.stream().filter(x -> x.toString().split(".").length > 1)
-//                .map(x -> x.toString().split(".")[1].substring(1, 2)).collect(Collectors.toList());
+        }).flatMap(List::stream).collect(Collectors.toList());
 
         List<ColorBox> nulls = colorBoxList.stream()
                 .filter(x -> x.getSpaceList().stream().filter(y -> y.getContent() == null).collect(Collectors.toList()).size() > 0)
                 .collect(Collectors.toList());
         String sanMojiMe = nulls.get(0).getColor().getColorName().substring(3, 4);
+
         log(sanMojiMe);
 
         List<ColorBox> ends =
                 colorBoxList.stream().filter(x -> x.getColor().getColorName().endsWith(sanMojiMe)).collect(Collectors.toList());
-//        ends.stream().filter(x -> (x.getSize().getDepth() + "").equals())
 
-        log(ends);
+        List<BigDecimal> twoDp = bds.stream()
+                .filter(x -> x.remainder(BigDecimal.ONE).doubleValue() > 0)
+                .filter(x -> x.remainder(BigDecimal.ONE).toString().length() > 3)
+                .collect(Collectors.toList());
 
-        //                .filter(x -> {
+        List<BigDecimal> common = twoDp.stream()
+                .filter(x -> ends.stream()
+                        .map(y -> (y.getSize().getDepth() + "").substring(0, 1))
+                        .collect(Collectors.toList())
+                        .contains(x.remainder(BigDecimal.ONE).toString().substring(3, 4)))
+                .collect(Collectors.toList());
 
-//                    if (x instanceof DoorBoxSpace){
-//                        ((DoorBoxSpace)x).openTheDoor();
-//                    }
-//
-//                    return x.getContent() == null;
-//
-//                })
-//                .collect(Collectors.toList());
-
-        System.out.println();
-
-//        log(nulls);
-
+        log(colorBoxList.stream()
+                .filter(x -> x.getColor().getColorName().length() == common.get(0).intValue())
+                .collect(Collectors.toList()));
     }
 
     // ===================================================================================
@@ -130,11 +107,9 @@ public class Step19DevilTest extends PlainTestCase {
      * ((このテストメソッドの中だけで無理やり)赤いカラーボックスの高さを160に変更して、BoxSizeをtoString()すると？)
      */
 
-
-
     public void test_looks_like_easy() throws NoSuchFieldException, IllegalAccessException {
         ColorBox redBox = colorBoxList.stream().filter(x -> x.getColor().getColorName().equals("red")).collect(Collectors.toList()).get(0);
-        Field field  = redBox.getSize().getClass().getDeclaredField("height");
+        Field field = redBox.getSize().getClass().getDeclaredField("height");
         field.setAccessible(true);
         Field modifiersField = Field.class.getDeclaredField("modifiers");
         modifiersField.setAccessible(true);
