@@ -59,6 +59,33 @@ public class Step19DevilTest extends PlainTestCase {
      * スペースの中のリストの中で最初に見つかるBigDecimalの一の位の数字と同じ色の長さのカラーボックスの一番下のスペースに入っているものは？)
      */
     public void test_too_long() {
+//         List<Object> nulls = spaces.stream()
+        List<ColorBox> nulls = colorBoxList.stream()
+                .filter(x -> x.getSpaceList().stream().filter(y -> y.getContent() == null).collect(Collectors.toList()).size() > 0)
+                .collect(Collectors.toList());
+        String sanMojiMe = nulls.get(0).getColor().getColorName().substring(3, 4);
+        log(sanMojiMe);
+
+        List<ColorBox> ends =
+                colorBoxList.stream().filter(x -> x.getColor().getColorName().endsWith(sanMojiMe)).collect(Collectors.toList());
+//        ends.
+
+        log(ends);
+
+        //                .filter(x -> {
+
+//                    if (x instanceof DoorBoxSpace){
+//                        ((DoorBoxSpace)x).openTheDoor();
+//                    }
+//
+//                    return x.getContent() == null;
+//
+//                })
+//                .collect(Collectors.toList());
+
+        System.out.println();
+
+//        log(nulls);
 
     }
 
