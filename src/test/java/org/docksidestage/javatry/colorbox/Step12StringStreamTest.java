@@ -40,6 +40,7 @@ import org.docksidestage.unit.PlainTestCase;
 public class Step12StringStreamTest extends PlainTestCase {
 
     List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+    List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
     // ===================================================================================
     //                                                                            length()
     //                                                                            ========
@@ -62,7 +63,6 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の中で、一番長い文字列は？)
      */
     public void test_length_findMax() {
-        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
         List<String> strings = spaces.stream()
                 .filter(x -> x.getContent() != null)
                 .map(x -> x.getContent())
@@ -81,7 +81,6 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の中で、一番長いものと短いものの差は何文字？)
      */
     public void test_length_findMaxMinDiff() {
-        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
         List<String> strings = spaces.stream()
                 .filter(x -> x.getContent() != null)
                 .map(x -> x.getContent())
@@ -99,7 +98,6 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる値 (文字列以外はtoString()) の中で、二番目に長い文字列は？ (ソートなしで))
      */
     public void test_length_findSecondMax() {
-        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
         List<String> strings = spaces.stream()
                 .filter(x -> x.getContent() != null)
                 .map(x -> x.getContent())
@@ -119,7 +117,6 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の長さの合計は？)
      */
     public void test_length_calculateLengthSum() {
-        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
         List<String> strings = spaces.stream()
                 .filter(x -> x.getContent() != null)
                 .map(x -> x.getContent())
@@ -180,7 +177,6 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる "front" で終わる文字列で、最初の "front" は何文字目から始まる？)
      */
     public void test_indexOf_findIndex() {
-        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
         List<String> strings = spaces.stream()
                 .filter(x -> x.getContent() != null)
                 .map(x -> x.getContent())
@@ -196,7 +192,6 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる「ど」を二つ以上含む文字列で、最後の「ど」は何文字目から始まる？ (e.g. "どんどん" => 3))
      */
     public void test_lastIndexOf_findIndex() {
-        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
         List<String> strings = spaces.stream()
                 .filter(x -> x.getContent() != null)
                 .map(x -> x.getContent())
@@ -214,7 +209,6 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる "front" で終わる文字列の最初の一文字は？)
      */
     public void test_substring_findFirstChar() {
-        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
         List<String> strings = spaces.stream()
                 .filter(x -> x.getContent() != null)
                 .map(x -> x.getContent())
@@ -230,7 +224,6 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる "Water" で始まる文字列の最後の一文字は？)
      */
     public void test_substring_findLastChar() {
-        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
         List<String> strings = spaces.stream()
                 .filter(x -> x.getContent() != null)
                 .map(x -> x.getContent())
@@ -249,7 +242,6 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる "o" (おー) を含んだ文字列から "o" を全て除去したら何文字？)
      */
     public void test_replace_remove_o() {
-        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
         List<String> strings = spaces.stream()
                 .filter(x -> x.getContent() != null)
                 .map(x -> x.getContent())
@@ -265,7 +257,6 @@ public class Step12StringStreamTest extends PlainTestCase {
      * カラーボックスに入ってる java.io.File のパス文字列のファイルセパレーターの "/" を、Windowsのファイルセパレーターに置き換えた文字列は？
      */
     public void test_replace_fileseparator() {
-        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
         List<String> paths =
                 spaces.stream().filter(x -> x.getContent() != null).map(x -> x.getContent()).filter(x -> x instanceof File).map(x -> {
                     try {
@@ -288,7 +279,6 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスの中に入っているDevilBoxクラスのtextの長さの合計は？)
      */
     public void test_welcomeToDevil() {
-        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
         List<YourPrivateRoom.DevilBox> devilBoxes = spaces.stream()
                 .filter(x -> x.getContent() != null)
                 .map(x -> x.getContent())
@@ -320,7 +310,6 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = value ; ... }" という形式で表示すると？)
      */
     public void test_showMap_flat() {
-        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
         List<String> toStrings = spaces.stream()
                 .filter(x -> x.getContent() != null && x.getContent() instanceof LinkedHashMap)
                 .map(x -> x.getContent())
@@ -334,7 +323,6 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = map:{ key = value ; ... } ; ... }" という形式で表示すると？)
      */
     public void test_showMap_nested() {
-        List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
         List<String> toStrings = spaces.stream()
                 .filter(x -> x.getContent() != null && x.getContent() instanceof LinkedHashMap)
                 .map(x -> x.getContent())
