@@ -330,16 +330,8 @@ public class Step12StringStreamTest extends PlainTestCase {
 
 
         for (String temp: subMaps){
-            parseKeyValuePairs(temp, m);
-//            List<String> pairs = Arrays.asList(temp.split(";"));
-//
-//            for(String pair: pairs){
-//
-//
-//            }
+            getTopLevelPairs(temp, m);
         }
-
-
 
         for (String temp : subMaps) {
 
@@ -404,6 +396,66 @@ public class Step12StringStreamTest extends PlainTestCase {
         String ans = !first ? (s.substring(firstIndex + 1, index)) : "";
         String[] myStringArray = ans.split("  ");
         return myStringArray;
+    }
+
+
+    void getTopLevelPairs(String s, Map m) {
+        s = s.replace("map:", "");
+        int depth = 0;
+        int index = 0;
+
+        int firstIndex = -1;
+
+        String keyPairs = "";
+
+        while (index <= s.length() - 1) {
+            char c = s.charAt(index);
+            if (c == '{') {
+                if (keyPairs.charAt(keyPairs.length()-1) == '='){
+                    keyPairs = keyPairs.substring(0, keyPairs.length()-2);
+                }
+                depth++;
+            }
+            if (c == '}') {
+                depth--;
+            }
+
+            if (depth == 0 && c != ' ' && c !='{' && c != '}'){
+                if (!(keyPairs.length() > 0 && keyPairs.charAt(keyPairs.length()-1) == ';' && c == ';')){
+                    keyPairs += c;
+                }
+            }
+
+            index++;
+        }
+
+        for (String pair : Arrays.asList(keyPairs.split(";"))) {
+            String[] splitted = pair.split("=");
+            String key = splitted[0].trim();
+            String val = splitted[1].trim();
+            m.put(key, val);
+        }
+
+
+        //        String answer = Arrays.asList(keyPairs.split("=")).stream().collect(Collectors.joining(" = "));
+//        answer = Arrays.asList(answer.split(";")).stream().collect(Collectors.joining("; |"));
+//
+//
+//        for (String pair: answer.split("\\|")){
+//            s = s.replace(pair, "");
+//        }
+
+
+
+//        System.out.println(answer);
+
+    }
+
+    public void test_getTopLevelPairs() {
+        String s = " x = y; k = q; a = map:{ b = map:{ t = f; poop = brown; tea = tasty; }; };  z = map:{ c = d}; p = 100; ";
+        Map m = new HashMap();
+        getTopLevelPairs(s, m);
+        System.out.println();
     }
 
     void recursive(String[] list) {

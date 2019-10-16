@@ -18,7 +18,10 @@ package org.docksidestage.javatry.colorbox;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
@@ -47,6 +50,38 @@ public class Step19DevilTest extends PlainTestCase {
     // ===================================================================================
     //                                                                        Devil Parade
     //                                                                        ============
+
+    public void getDevils(){
+
+//        colorBoxList.stream()
+//                .filter(x -> x.getSpaceList()
+//                        .stream().filter(y -> y.getContent() instanceof YourPrivateRoom.DevilBox))
+
+        List<ColorBox> devils = colorBoxList.stream()
+                .filter(x -> x.getSpaceList().stream()
+                        .filter(y -> y.getContent() instanceof YourPrivateRoom.DevilBox)
+                        .map(y -> (YourPrivateRoom.DevilBox) y.getContent())
+                        .collect(Collectors.toList()).size() > 0)
+                .collect(Collectors.toList());
+
+//        devilBoxes.forEach(x -> {
+//            x.wakeUp();
+//            x.allowMe();
+//            x.open();
+//
+//
+//
+//            try {
+//                total.addAndGet(x.getText().length());
+//            } catch (YourPrivateRoom.DevilBoxTextNotFoundException e) {
+//
+//                devils.add(x);
+//            }
+//        });
+//
+//        return devilBoxes;
+    }
+
     /**
      * What is the content in low space of color-box
      * of which lengths of the color is same as first place number of BigDecimal value first found in List in box spaces,
@@ -72,9 +107,15 @@ public class Step19DevilTest extends PlainTestCase {
                     .collect(Collectors.toList());
         }).flatMap(List::stream).collect(Collectors.toList());
 
+        // Change to do devil boxes.
         List<ColorBox> nulls = colorBoxList.stream()
-                .filter(x -> x.getSpaceList().stream().filter(y -> y.getContent() == null).collect(Collectors.toList()).size() > 0)
+
+                .filter(x -> x.getSpaceList().stream().filter(y -> y.getContent() == null)
+                        .collect(Collectors.toList()).size() > 0)
                 .collect(Collectors.toList());
+
+//        nulls.addAll((getDevils());
+
         String sanMojiMe = nulls.get(0).getColor().getColorName().substring(3, 4);
 
         log(sanMojiMe);
