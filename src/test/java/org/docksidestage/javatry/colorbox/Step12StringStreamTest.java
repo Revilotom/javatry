@@ -275,12 +275,21 @@ public class Step12StringStreamTest extends PlainTestCase {
         cleanContent.stream().filter(x -> x instanceof LinkedHashMap).map(x -> getPrettyMap((Map) x, false)).forEach(x -> log(x));
     }
 
-    String getPrettyMap(Map m, boolean nested) {
-        return "map:{ " + m.keySet().stream().map(k -> {
-            if (m.get(k) instanceof Map && nested) {
-                return getPrettyMap((Map) m.get(k), true) + ";";
+//    String getPrettyMap(Map m, boolean nested) {
+//        return "map:{ " + m.keySet().stream().map(k -> {
+//            if (m.get(k) instanceof Map && nested) {
+//                return k + " = " + getPrettyMap((Map) m.get(k), true) + " ;";
+//            }
+//            return k + " = " + m.get(k) + " ;";
+//        }).collect(Collectors.joining(" ")) + " }";
+//    }
+
+    String getPrettyMap(Map<String, Object> m, boolean nested) {
+        return "map:{ " + m.entrySet().stream().map(e -> {
+            if (e.getValue() instanceof Map && nested) {
+                return e.getKey() + " = " + getPrettyMap((Map)e.getValue(), true) + " ;";
             }
-            return k + " = " + m.get(k) + " ;";
+            return e.getKey() + " = " + e.getValue() + " ;";
         }).collect(Collectors.joining(" ")) + " }";
     }
 
@@ -528,5 +537,43 @@ public class Step12StringStreamTest extends PlainTestCase {
 
         //        parse(d1.getText());
         System.out.println();
+    }
+
+
+    public void test_TestParser(){
+        Map m = new HashMap();
+        m.put("a", "b");
+        m.put("c", "d");
+        Map k = new HashMap();
+        k.put("x", "y");
+        k.put("z", "*");
+
+        Map p = new HashMap();
+        p.put("q", k);
+        m.put("t", p);
+
+        m.put("j", "k");
+
+        String s = getPrettyMap(m, true);
+        mapParser(s, 0, new HashMap());
+        log(s);
+    }
+
+    void mapParser(String s, int i, Map m){
+        s = s.replace("map:", "");
+        String keyPairs = "";
+        while (i < s.length() - 1){
+            char c = s.charAt(i);
+            if (c == '{'){
+                mapParser(s, i + 1, new HashMap());
+            }
+            else{
+                keyPairs += c;
+                i++;
+            }
+        }
+        System.out.println();
+
+
     }
 }
