@@ -18,10 +18,7 @@ package org.docksidestage.javatry.colorbox;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
@@ -51,35 +48,51 @@ public class Step19DevilTest extends PlainTestCase {
     //                                                                        Devil Parade
     //                                                                        ============
 
-    public void getDevils(){
+    public List<ColorBox> getDevils() {
 
-//        colorBoxList.stream()
-//                .filter(x -> x.getSpaceList()
-//                        .stream().filter(y -> y.getContent() instanceof YourPrivateRoom.DevilBox))
+        //        colorBoxList.stream()
+        //                .filter(x -> x.getSpaceList()
+        //                        .stream().filter(y -> y.getContent() instanceof YourPrivateRoom.DevilBox))
 
         List<ColorBox> devils = colorBoxList.stream()
-                .filter(x -> x.getSpaceList().stream()
+                .filter(x -> x.getSpaceList()
+                        .stream()
                         .filter(y -> y.getContent() instanceof YourPrivateRoom.DevilBox)
                         .map(y -> (YourPrivateRoom.DevilBox) y.getContent())
-                        .collect(Collectors.toList()).size() > 0)
-                .collect(Collectors.toList());
+                        .filter(y -> {
+                            y.wakeUp();
+                            y.allowMe();
+                            y.open();
 
-//        devilBoxes.forEach(x -> {
-//            x.wakeUp();
-//            x.allowMe();
-//            x.open();
-//
-//
-//
-//            try {
-//                total.addAndGet(x.getText().length());
-//            } catch (YourPrivateRoom.DevilBoxTextNotFoundException e) {
-//
-//                devils.add(x);
-//            }
-//        });
-//
-//        return devilBoxes;
+                            try {
+                                y.getText();
+                                return false;
+                            } catch (YourPrivateRoom.DevilBoxTextNotFoundException e) {
+
+                                return true;
+                            }
+                        })
+                        .collect(Collectors.toList())
+                        .size() > 0)
+                .collect(Collectors.toList());
+        return devils;
+
+        //        devilBoxes.forEach(x -> {
+        //            x.wakeUp();
+        //            x.allowMe();
+        //            x.open();
+        //
+        //
+        //
+        //            try {
+        //                total.addAndGet(x.getText().length());
+        //            } catch (YourPrivateRoom.DevilBoxTextNotFoundException e) {
+        //
+        //                devils.add(x);
+        //            }
+        //        });
+        //
+        //        return devilBoxes;
     }
 
     /**
@@ -110,18 +123,21 @@ public class Step19DevilTest extends PlainTestCase {
         // Change to do devil boxes.
         List<ColorBox> nulls = colorBoxList.stream()
 
-                .filter(x -> x.getSpaceList().stream().filter(y -> y.getContent() == null)
-                        .collect(Collectors.toList()).size() > 0)
+                .filter(x -> x.getSpaceList().stream().filter(y -> y.getContent() == null).collect(Collectors.toList()).size() > 0)
                 .collect(Collectors.toList());
 
-//        nulls.addAll((getDevils());
+        nulls.addAll(getDevils());
 
-        String sanMojiMe = nulls.get(0).getColor().getColorName().substring(3, 4);
+        List<String> sanMojiMes = nulls.stream().map(x -> x.getColor().getColorName().substring(2, 3)).collect(Collectors.toList());
 
-        log(sanMojiMe);
+        log(sanMojiMes);
 
         List<ColorBox> ends =
-                colorBoxList.stream().filter(x -> x.getColor().getColorName().endsWith(sanMojiMe)).collect(Collectors.toList());
+                colorBoxList.stream().filter(x -> {
+                    return sanMojiMes.stream()
+                            .filter(y -> x.getColor().getColorName().endsWith(y))
+                            .collect(Collectors.toList()).size() > 0;
+                }).collect(Collectors.toList());
 
         List<BigDecimal> twoDp = bds.stream()
                 .filter(x -> x.remainder(BigDecimal.ONE).doubleValue() > 0)
