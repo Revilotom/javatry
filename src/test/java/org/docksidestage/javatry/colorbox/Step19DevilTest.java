@@ -50,10 +50,6 @@ public class Step19DevilTest extends PlainTestCase {
 
     public List<ColorBox> getDevils() {
 
-        //        colorBoxList.stream()
-        //                .filter(x -> x.getSpaceList()
-        //                        .stream().filter(y -> y.getContent() instanceof YourPrivateRoom.DevilBox))
-
         List<ColorBox> devils = colorBoxList.stream()
                 .filter(x -> x.getSpaceList()
                         .stream()
@@ -76,23 +72,6 @@ public class Step19DevilTest extends PlainTestCase {
                         .size() > 0)
                 .collect(Collectors.toList());
         return devils;
-
-        //        devilBoxes.forEach(x -> {
-        //            x.wakeUp();
-        //            x.allowMe();
-        //            x.open();
-        //
-        //
-        //
-        //            try {
-        //                total.addAndGet(x.getText().length());
-        //            } catch (YourPrivateRoom.DevilBoxTextNotFoundException e) {
-        //
-        //                devils.add(x);
-        //            }
-        //        });
-        //
-        //        return devilBoxes;
     }
 
     /**
@@ -183,14 +162,8 @@ public class Step19DevilTest extends PlainTestCase {
      * (カラーボックスに入っているFunctionalInterfaceアノテーションが付与されているインターフェースのFunctionalメソッドの戻り値は？)
      */
     public void test_be_frameworker() {
-        YourPrivateRoom.FavoriteProvider f = new YourPrivateRoom.FavoriteProvider() {
-            @Override
-            public String justHere() {
-                return null;
-            }
-
-        };
-
-        log(f.justHere()); // In this example null
+        cleanContent.stream()
+                .filter(x -> x instanceof YourPrivateRoom.FavoriteProvider)
+                .forEach(x -> log(((YourPrivateRoom.FavoriteProvider) x).justHere()));
     }
 }
