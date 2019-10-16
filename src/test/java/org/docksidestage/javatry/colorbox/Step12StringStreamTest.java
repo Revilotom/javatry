@@ -70,10 +70,13 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の中で、一番長い文字列は？)
      */
     public void test_length_findMax() {
-        List<String> strings = cleanContent.stream().filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
+        List<String> strings = cleanContent.stream()
+                .filter(x -> x instanceof String)
+                .map(x -> x.toString()).collect(Collectors.toList());
 
         int maxLength = strings.stream().max(Comparator.comparingInt(o -> o.length())).get().length();
         log(maxLength);
+
         Set<String> maxes = strings.stream().filter(x -> x.length() == maxLength).collect(Collectors.toSet());
         log(maxes);
     }
@@ -274,15 +277,6 @@ public class Step12StringStreamTest extends PlainTestCase {
     public void test_showMap_flat() {
         cleanContent.stream().filter(x -> x instanceof LinkedHashMap).map(x -> getPrettyMap((Map) x, false)).forEach(x -> log(x));
     }
-
-//    String getPrettyMap(Map m, boolean nested) {
-//        return "map:{ " + m.keySet().stream().map(k -> {
-//            if (m.get(k) instanceof Map && nested) {
-//                return k + " = " + getPrettyMap((Map) m.get(k), true) + " ;";
-//            }
-//            return k + " = " + m.get(k) + " ;";
-//        }).collect(Collectors.joining(" ")) + " }";
-//    }
 
     String getPrettyMap(Map<String, Object> m, boolean nested) {
         return "map:{ " + m.entrySet().stream().map(e -> {
@@ -544,35 +538,67 @@ public class Step12StringStreamTest extends PlainTestCase {
         Map m = new HashMap();
         m.put("a", "b");
         m.put("c", "d");
+
         Map k = new HashMap();
         k.put("x", "y");
         k.put("z", "*");
-
+//
         Map p = new HashMap();
         p.put("q", k);
         m.put("t", p);
-
+//
         m.put("j", "k");
 
         String s = getPrettyMap(m, true);
-        mapParser(s, 0, new HashMap());
+
+        Map res = new HashMap();
+
+        mapParser(s, 0, res);
+        log(res);
         log(s);
     }
 
-    void mapParser(String s, int i, Map m){
+    Temp mapParser(String s, int i, Map inputMap){
         s = s.replace("map:", "");
+        s = s.replace(" ","");
         String keyPairs = "";
-        while (i < s.length() - 1){
+        while (i < s.length()){
             char c = s.charAt(i);
+            if (c == '}' ){
+
+                List<String> l = Arrays.asList(keyPairs.trim().split(";"));
+                Collections.sort(l, new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        return o1.split("=").length - o2.split("=").length;
+                    }
+                });
+                for (String x : l) {
+                    String[] pair = x.split("=");
+                    if (pair.length == 1){
+                        Map newMap = new HashMap();
+                        newMap.put(pair[0], inputMap);
+                        inputMap = newMap;
+                    }
+                    else{
+                        inputMap.put(pair[0].trim(), pair[1].trim());
+                    }
+                }
+
+                return new Temp(i, inputMap);
+            }
             if (c == '{'){
-                mapParser(s, i + 1, new HashMap());
+                Temp t = mapParser(s, i + 1, new HashMap());
+                i = t.index;
+                inputMap = t.m;
             }
             else{
                 keyPairs += c;
-                i++;
             }
+            i++;
         }
-        System.out.println();
+        log(inputMap);
+        return new Temp(i, inputMap);
 
 
     }
