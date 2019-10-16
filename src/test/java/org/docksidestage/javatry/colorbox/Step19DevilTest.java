@@ -101,7 +101,6 @@ public class Step19DevilTest extends PlainTestCase {
 
         // Change to do devil boxes.
         List<ColorBox> nulls = colorBoxList.stream()
-
                 .filter(x -> x.getSpaceList().stream().filter(y -> y.getContent() == null).collect(Collectors.toList()).size() > 0)
                 .collect(Collectors.toList());
 
@@ -111,12 +110,9 @@ public class Step19DevilTest extends PlainTestCase {
 
         log(sanMojiMes);
 
-        List<ColorBox> ends =
-                colorBoxList.stream().filter(x -> {
-                    return sanMojiMes.stream()
-                            .filter(y -> x.getColor().getColorName().endsWith(y))
-                            .collect(Collectors.toList()).size() > 0;
-                }).collect(Collectors.toList());
+        List<ColorBox> ends = colorBoxList.stream().filter(x -> {
+            return sanMojiMes.stream().filter(y -> x.getColor().getColorName().endsWith(y)).collect(Collectors.toList()).size() > 0;
+        }).collect(Collectors.toList());
 
         List<BigDecimal> twoDp = bds.stream()
                 .filter(x -> x.remainder(BigDecimal.ONE).doubleValue() > 0)
@@ -132,7 +128,7 @@ public class Step19DevilTest extends PlainTestCase {
 
         log(colorBoxList.stream()
                 .filter(x -> x.getColor().getColorName().length() == common.get(0).intValue())
-                .collect(Collectors.toList()));
+                .map(x -> x.getSpaceList().get(x.getSpaceList().size() - 1).getContent()).collect(Collectors.toList()));
     }
 
     // ===================================================================================
