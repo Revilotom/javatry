@@ -22,7 +22,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
-import org.docksidestage.bizfw.colorbox.color.BoxColor;
 import org.docksidestage.bizfw.colorbox.impl.StandardColorBox;
 import org.docksidestage.bizfw.colorbox.space.BoxSpace;
 import org.docksidestage.bizfw.colorbox.space.DoorBoxSpace;
@@ -41,16 +40,14 @@ public class Step12StringStreamTest extends PlainTestCase {
 
     List<BoxSpace> spaces = colorBoxList.stream().map(x -> x.getSpaceList()).flatMap(List::stream).collect(Collectors.toList());
 
-    List<Object> cleanContent = spaces.stream()
-            .map(x -> {
+    List<Object> cleanContent = spaces.stream().map(x -> {
 
-                if (x instanceof DoorBoxSpace){
-                    ((DoorBoxSpace)x).openTheDoor();
-                }
-                return x.getContent();
+        if (x instanceof DoorBoxSpace) {
+            ((DoorBoxSpace) x).openTheDoor();
+        }
+        return x.getContent();
 
-            })
-            .collect(Collectors.toList());
+    }).collect(Collectors.toList());
     // ===================================================================================
     //                                                                            length()
     //                                                                            ========
@@ -73,10 +70,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の中で、一番長い文字列は？)
      */
     public void test_length_findMax() {
-        List<String> strings = cleanContent.stream()
-                .filter(x -> x instanceof String)
-                .map(x -> x.toString())
-                .collect(Collectors.toList());
+        List<String> strings = cleanContent.stream().filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
 
         int maxLength = strings.stream().max(Comparator.comparingInt(o -> o.length())).get().length();
         log(maxLength);
@@ -89,11 +83,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の中で、一番長いものと短いものの差は何文字？)
      */
     public void test_length_findMaxMinDiff() {
-        List<String> strings =
-                cleanContent.stream()
-                .filter(x -> x instanceof String)
-                .map(x -> x.toString())
-                .collect(Collectors.toList());
+        List<String> strings = cleanContent.stream().filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
 
         int maxLength = strings.stream().max(Comparator.comparingInt(o -> o.length())).get().length();
         int minLength = strings.stream().min(Comparator.comparingInt(o -> o.length())).get().length();
@@ -105,11 +95,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる値 (文字列以外はtoString()) の中で、二番目に長い文字列は？ (ソートなしで))
      */
     public void test_length_findSecondMax() {
-        List<String> strings =
-                cleanContent.stream()
-                        .filter(x -> x != null)
-                .map(x -> x.toString())
-                .collect(Collectors.toList());
+        List<String> strings = cleanContent.stream().filter(x -> x != null).map(x -> x.toString()).collect(Collectors.toList());
         int maxLength = strings.stream().max(Comparator.comparingInt(o -> o.length())).get().length();
         List<String> leftOvers = strings.stream().filter(x -> x.length() < maxLength).collect(Collectors.toList());
         int secondMax = leftOvers.stream().max(Comparator.comparingInt(o -> o.length())).get().length();
@@ -124,11 +110,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の長さの合計は？)
      */
     public void test_length_calculateLengthSum() {
-        List<String> strings =
-                cleanContent.stream()
-                .filter(x -> x instanceof String)
-                .map(x -> x.toString())
-                .collect(Collectors.toList());
+        List<String> strings = cleanContent.stream().filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
         int sum = strings.stream().map(x -> x.length()).mapToInt(Integer::intValue).sum();
         log(sum);
     }
@@ -183,11 +165,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる "front" で終わる文字列で、最初の "front" は何文字目から始まる？)
      */
     public void test_indexOf_findIndex() {
-        List<String> strings =
-                cleanContent.stream()
-                .filter(x -> x instanceof String)
-                .map(x -> x.toString())
-                .collect(Collectors.toList());
+        List<String> strings = cleanContent.stream().filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
         List<String> content = strings.stream().filter(x -> x.endsWith("front")).collect(Collectors.toList());
         log(content.get(0).indexOf("front") + 1);
     }
@@ -197,11 +175,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる「ど」を二つ以上含む文字列で、最後の「ど」は何文字目から始まる？ (e.g. "どんどん" => 3))
      */
     public void test_lastIndexOf_findIndex() {
-        List<String> strings =
-                cleanContent.stream()
-                .filter(x -> x instanceof String)
-                .map(x -> x.toString())
-                .collect(Collectors.toList());
+        List<String> strings = cleanContent.stream().filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
         List<String> targets = strings.stream().filter(x -> x.split("ど").length == 3).collect(Collectors.toList());
         log(targets.stream().map(x -> x.lastIndexOf("ど") + 1).collect(Collectors.toList()));
     }
@@ -213,11 +187,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる "front" で終わる文字列の最初の一文字は？)
      */
     public void test_substring_findFirstChar() {
-        List<String> strings =
-                cleanContent.stream()
-                .filter(x -> x instanceof String)
-                .map(x -> x.toString())
-                .collect(Collectors.toList());
+        List<String> strings = cleanContent.stream().filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
         List<String> content = strings.stream().filter(x -> x.endsWith("front")).collect(Collectors.toList());
         log(content.get(0).substring(0, 1));
     }
@@ -227,11 +197,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる "Water" で始まる文字列の最後の一文字は？)
      */
     public void test_substring_findLastChar() {
-        List<String> strings =
-                cleanContent.stream()
-                .filter(x -> x instanceof String)
-                .map(x -> x.toString())
-                .collect(Collectors.toList());
+        List<String> strings = cleanContent.stream().filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
         List<String> content = strings.stream().filter(x -> x.startsWith("Water")).collect(Collectors.toList());
         log(content.get(0).substring(content.get(0).length() - 1));
     }
@@ -244,11 +210,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる "o" (おー) を含んだ文字列から "o" を全て除去したら何文字？)
      */
     public void test_replace_remove_o() {
-        List<String> strings =
-                cleanContent.stream()
-                .filter(x -> x instanceof String)
-                .map(x -> x.toString())
-                .collect(Collectors.toList());
+        List<String> strings = cleanContent.stream().filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
         List<String> content = strings.stream().filter(x -> x.contains("o")).collect(Collectors.toList());
         log(content.stream().map(x -> x.replace("o", "").length()).collect(Collectors.toList()).get(0));
     }
@@ -258,17 +220,15 @@ public class Step12StringStreamTest extends PlainTestCase {
      * カラーボックスに入ってる java.io.File のパス文字列のファイルセパレーターの "/" を、Windowsのファイルセパレーターに置き換えた文字列は？
      */
     public void test_replace_fileseparator() {
-        List<String> paths =
-                cleanContent.stream()
-                        .filter(x -> x instanceof File).map(x -> {
-                    try {
-                        return ((File) x).getCanonicalPath().replace("/", "\\");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        return "";
-                    }
+        List<String> paths = cleanContent.stream().filter(x -> x instanceof File).map(x -> {
+            try {
+                return ((File) x).getCanonicalPath().replace("/", "\\");
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "";
+            }
 
-                }).collect(Collectors.toList());
+        }).collect(Collectors.toList());
 
         log(paths);
     }
@@ -281,8 +241,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスの中に入っているDevilBoxクラスのtextの長さの合計は？)
      */
     public void test_welcomeToDevil() {
-        List<YourPrivateRoom.DevilBox> devilBoxes =
-                cleanContent.stream()
+        List<YourPrivateRoom.DevilBox> devilBoxes = cleanContent.stream()
                 .filter(x -> x instanceof YourPrivateRoom.DevilBox)
                 .map(x -> (YourPrivateRoom.DevilBox) x)
                 .collect(Collectors.toList());
@@ -313,19 +272,16 @@ public class Step12StringStreamTest extends PlainTestCase {
     // TODO tom 今は、MapのtoStringによって "{1-Day Passport=7400, Starlight Passport=5400,... }" というフォーマットで出力されているけど、
     //          これを "map:{ 1-Day Passport = 7400 ; Starlight Passport = 5400 ; ... }"というフォーマットで出力してみよう by もってぃ
     public void test_showMap_flat() {
-        cleanContent.stream()
-        .filter(x -> x instanceof LinkedHashMap)
-        .map(x -> getPrettyMap((Map)x, false))
-        .forEach(x -> log(x));
+        cleanContent.stream().filter(x -> x instanceof LinkedHashMap).map(x -> getPrettyMap((Map) x, false)).forEach(x -> log(x));
     }
 
-    String getPrettyMap(Map m, boolean nested){
-       return "map:{ " +  m.keySet().stream().map(k -> {
-           if (m.get(k) instanceof Map && nested){
-               return getPrettyMap((Map) m.get(k), true) + ";";
-           }
-          return k + " = " + m.get(k) + " ;";
-       }).collect(Collectors.joining(" ")) + " }";
+    String getPrettyMap(Map m, boolean nested) {
+        return "map:{ " + m.keySet().stream().map(k -> {
+            if (m.get(k) instanceof Map && nested) {
+                return getPrettyMap((Map) m.get(k), true) + ";";
+            }
+            return k + " = " + m.get(k) + " ;";
+        }).collect(Collectors.joining(" ")) + " }";
     }
 
     /**
@@ -334,10 +290,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      */
     // TODO tom こちらも上と同じフォーマットで出力してみよう by もってぃ
     public void test_showMap_nested() {
-        cleanContent.stream()
-                .filter(x -> x instanceof LinkedHashMap)
-                .map(x -> getPrettyMap((Map)x, true))
-                .forEach(x -> log(x));
+        cleanContent.stream().filter(x -> x instanceof LinkedHashMap).map(x -> getPrettyMap((Map) x, true)).forEach(x -> log(x));
     }
 
     // ===================================================================================
@@ -350,25 +303,14 @@ public class Step12StringStreamTest extends PlainTestCase {
     // TODO tom Stringの "map:{ dockside = over ; hangar = mystic ; broadway = bbb }" として出力するのではなく、
     //          Stringをparseして Map にしてみよう。(おそらく "{dockside=over,hangar=mystic,broadway=bbb}"と出力されるはず?) by もってぃ
 
-    Map parse (Map mapFromAbove, String s){
 
-        Map m = new HashMap();
-
-        String temp = subMap(s);
-        if (!temp.equals("")){
-            m = parse(new HashMap(), temp);
-        }
-
-        if (s.contains("{")){
-            String[] keys = s.split("\\{")[0].split("=");
-            String key = keys[keys.length - 1].trim();
-            mapFromAbove.put(key, m);
-            return m;
-        }
-
-        for (String pair: Arrays.asList(s.split(";"))) {
+    void parseKeyValuePairs(String s, Map m){
+        for (String pair : Arrays.asList(s.split(";"))) {
+            if (pair.contains("{")){
+                continue;
+            }
             String[] splitted = pair.split("=");
-            if (splitted[0].trim().equals("")){
+            if (splitted[0].trim().equals("")) {
                 continue;
             }
             System.out.println(Arrays.toString(splitted));
@@ -377,17 +319,61 @@ public class Step12StringStreamTest extends PlainTestCase {
             m.put(key, val);
         }
 
-//        String f = s.split("\\{")[0];
-//        if (f.equals("map:")){
+    }
+
+
+    Map parse(Map mapFromAbove, String s) {
+
+        List<String> subMaps = Arrays.asList(subMap(s));
+
+        Map m = new HashMap();
+
+
+        for (String temp: subMaps){
+            parseKeyValuePairs(temp, m);
+//            List<String> pairs = Arrays.asList(temp.split(";"));
 //
-//        }
+//            for(String pair: pairs){
+//
+//
+//            }
+        }
 
 
+
+        for (String temp : subMaps) {
+
+            if (!temp.equals("")) {
+                m = parse(new HashMap(), temp);
+            }
+
+            if (s.contains("{")) {
+
+                String[] keys = s.split("\\{");
+                String[] pairs = keys[0].split(";");
+                String[] correct = pairs[pairs.length - 1].split("=");
+                String key = correct[correct.length - 2].trim();
+                mapFromAbove.put(key, m);
+                return mapFromAbove;
+            }
+
+            for (String pair : Arrays.asList(s.split(";"))) {
+                String[] splitted = pair.split("=");
+                if (splitted[0].trim().equals("")) {
+                    continue;
+                }
+                System.out.println(Arrays.toString(splitted));
+                String key = splitted[0].trim();
+                String val = splitted[1].trim();
+                m.put(key, val);
+            }
+            return m;
+        }
 
         return m;
     }
 
-    String subMap(String s){
+    String[] subMap(String s) {
         s = s.replace("map:", "");
         int depth = 0;
         int index = 0;
@@ -396,11 +382,11 @@ public class Step12StringStreamTest extends PlainTestCase {
 
         boolean first = true;
 
-        while(index <= s.length() - 1 ){
+        while (index <= s.length() - 1) {
             char c = s.charAt(index);
-            if(c == '{'){
+            if (c == '{') {
                 depth++;
-                if (first){
+                if (first) {
                     firstIndex = index;
                 }
                 first = false;
@@ -409,19 +395,40 @@ public class Step12StringStreamTest extends PlainTestCase {
                 depth--;
             }
 
-            if(!first && depth == 0){
+            if (!first && depth == 0) {
                 break;
             }
             index++;
         }
 
-        return !first ? (s.substring(firstIndex+1, index)) : "";
+        String ans = !first ? (s.substring(firstIndex + 1, index)) : "";
+        String[] myStringArray = ans.split("  ");
+        return myStringArray;
     }
 
-    public void test_b(){
+    void recursive(String[] list) {
+        log(list);
+        for (String s : list) {
+            list = subMap(s);
+        }
+        System.out.println();
+    }
+
+    public void test_submap() {
         String s = "map:{ x = y; k = q; a = map:{ b = map:{ t = f; poop = brown; tea = tasty; }; };  z = map:{ c = d}; };";
-//        String s1 = "map:{ x = y; k = q;}";
+        String[] ans = subMap(s);
+        assertEquals(" x = y; k = q; a = { b = { t = f; poop = brown; tea = tasty; }; };", ans[0]);
+        assertEquals("z = { c = d}; ", ans[1]);
+        log(ans[0]);
+        log(ans[1]);
+    }
+
+    public void test_b() {
+        String s = "map:{ x = y; k = q; a = map:{ b = map:{ t = f; poop = brown; tea = tasty; }; };  z = map:{ c = d}; p = 100; };";
+        //        String s1 = "map:{ x = y; k = q;}";
         parse(new HashMap(), s);
+//        recursive(subMap(s));
+
     }
 
     public void test_parseMap_flat() {
@@ -436,9 +443,9 @@ public class Step12StringStreamTest extends PlainTestCase {
                 .get(0)
                 .getContent());
 
-//        parse(d.getText());
+        //        parse(d.getText());
         System.out.println();
-//        log(d.getText());
+        //        log(d.getText());
     }
 
     /**
@@ -451,23 +458,23 @@ public class Step12StringStreamTest extends PlainTestCase {
                 .filter(x -> x instanceof StandardColorBox)
                 .map(x -> (StandardColorBox) x)
                 .collect(Collectors.toList());
-//        YourPrivateRoom.SecretBox d = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream()
-//                .filter(x -> x.getColor().getColorName().equals("white"))
-//                .map(x -> x.getMiddleSpace())
-//                .collect(Collectors.toList())
-//                .get(0)
-//                .getContent());
+        //        YourPrivateRoom.SecretBox d = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream()
+        //                .filter(x -> x.getColor().getColorName().equals("white"))
+        //                .map(x -> x.getMiddleSpace())
+        //                .collect(Collectors.toList())
+        //                .get(0)
+        //                .getContent());
         YourPrivateRoom.SecretBox d1 = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream()
                 .filter(x -> x.getColor().getColorName().equals("white"))
                 .map(x -> x.getLowerSpace())
                 .collect(Collectors.toList())
                 .get(0)
                 .getContent());
-//        log(d.getText());
-//        log(d1.getText());
-//
+        //        log(d.getText());
+        //        log(d1.getText());
+        //
 
-//        parse(d1.getText());
+        //        parse(d1.getText());
         System.out.println();
     }
 }
