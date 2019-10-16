@@ -70,9 +70,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の中で、一番長い文字列は？)
      */
     public void test_length_findMax() {
-        List<String> strings = cleanContent.stream()
-                .filter(x -> x instanceof String)
-                .map(x -> x.toString()).collect(Collectors.toList());
+        List<String> strings = cleanContent.stream().filter(x -> x instanceof String).map(x -> x.toString()).collect(Collectors.toList());
 
         int maxLength = strings.stream().max(Comparator.comparingInt(o -> o.length())).get().length();
         log(maxLength);
@@ -272,7 +270,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * What string is converted to style "map:{ key = value ; key = value ; ... }" from java.util.Map in color-boxes? <br>
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = value ; ... }" という形式で表示すると？)
      */
-    // TODO tom 今は、MapのtoStringによって "{1-Day Passport=7400, Starlight Passport=5400,... }" というフォーマットで出力されているけど、
+    // TODO Done tom 今は、MapのtoStringによって "{1-Day Passport=7400, Starlight Passport=5400,... }" というフォーマットで出力されているけど、
     //          これを "map:{ 1-Day Passport = 7400 ; Starlight Passport = 5400 ; ... }"というフォーマットで出力してみよう by もってぃ
     public void test_showMap_flat() {
         cleanContent.stream().filter(x -> x instanceof LinkedHashMap).map(x -> getPrettyMap((Map) x, false)).forEach(x -> log(x));
@@ -281,7 +279,7 @@ public class Step12StringStreamTest extends PlainTestCase {
     String getPrettyMap(Map<String, Object> m, boolean nested) {
         return "map:{ " + m.entrySet().stream().map(e -> {
             if (e.getValue() instanceof Map && nested) {
-                return e.getKey() + " = " + getPrettyMap((Map)e.getValue(), true) + " ;";
+                return e.getKey() + " = " + getPrettyMap((Map) e.getValue(), true) + " ;";
             }
             return e.getKey() + " = " + e.getValue() + " ;";
         }).collect(Collectors.joining(" ")) + " }";
@@ -291,7 +289,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * What string is converted to style "map:{ key = value ; key = map:{ key = value ; ... } ; ... }" from java.util.Map in color-boxes? <br>
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = map:{ key = value ; ... } ; ... }" という形式で表示すると？)
      */
-    // TODO tom こちらも上と同じフォーマットで出力してみよう by もってぃ
+    // TODO Done tom こちらも上と同じフォーマットで出力してみよう by もってぃ
     public void test_showMap_nested() {
         cleanContent.stream().filter(x -> x instanceof LinkedHashMap).map(x -> getPrettyMap((Map) x, true)).forEach(x -> log(x));
     }
@@ -303,189 +301,8 @@ public class Step12StringStreamTest extends PlainTestCase {
      * What string of toString() is converted from text of SecretBox class in upper space on the "white" color-box to java.util.Map? <br>
      * (whiteのカラーボックスのupperスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
      */
-    // TODO tom Stringの "map:{ dockside = over ; hangar = mystic ; broadway = bbb }" として出力するのではなく、
+    // TODO Done tom Stringの "map:{ dockside = over ; hangar = mystic ; broadway = bbb }" として出力するのではなく、
     //          Stringをparseして Map にしてみよう。(おそらく "{dockside=over,hangar=mystic,broadway=bbb}"と出力されるはず?) by もってぃ
-
-
-    void parseKeyValuePairs(String s, Map m){
-        for (String pair : Arrays.asList(s.split(";"))) {
-            if (pair.contains("{")){
-                continue;
-            }
-            String[] splitted = pair.split("=");
-            if (splitted[0].trim().equals("")) {
-                continue;
-            }
-            System.out.println(Arrays.toString(splitted));
-            String key = splitted[0].trim();
-            String val = splitted[1].trim();
-            m.put(key, val);
-        }
-
-    }
-
-
-    Map parse(Map mapFromAbove, String s) {
-
-        List<String> subMaps = Arrays.asList(subMap(s));
-
-        Map m = new HashMap();
-
-
-        for (String temp: subMaps){
-            getTopLevelPairs(temp, m);
-        }
-
-        for (String temp : subMaps) {
-
-            if (!temp.equals("")) {
-                m = parse(new HashMap(), temp);
-            }
-
-            if (s.contains("{")) {
-
-                String[] keys = s.split("\\{");
-                String[] pairs = keys[0].split(";");
-                String[] correct = pairs[pairs.length - 1].split("=");
-                String key = correct[correct.length - 2].trim();
-                mapFromAbove.put(key, m);
-                return mapFromAbove;
-            }
-
-            for (String pair : Arrays.asList(s.split(";"))) {
-                String[] splitted = pair.split("=");
-                if (splitted[0].trim().equals("")) {
-                    continue;
-                }
-                System.out.println(Arrays.toString(splitted));
-                String key = splitted[0].trim();
-                String val = splitted[1].trim();
-                m.put(key, val);
-            }
-            return m;
-        }
-
-        return m;
-    }
-
-    String[] subMap(String s) {
-        s = s.replace("map:", "");
-        int depth = 0;
-        int index = 0;
-
-        int firstIndex = -1;
-
-        boolean first = true;
-
-        while (index <= s.length() - 1) {
-            char c = s.charAt(index);
-            if (c == '{') {
-                depth++;
-                if (first) {
-                    firstIndex = index;
-                }
-                first = false;
-            }
-            if (c == '}') {
-                depth--;
-            }
-
-            if (!first && depth == 0) {
-                break;
-            }
-            index++;
-        }
-
-        String ans = !first ? (s.substring(firstIndex + 1, index)) : "";
-        String[] myStringArray = ans.split("  ");
-        return myStringArray;
-    }
-
-
-    void getTopLevelPairs(String s, Map m) {
-        s = s.replace("map:", "");
-        int depth = 0;
-        int index = 0;
-
-        int firstIndex = -1;
-
-        String keyPairs = "";
-
-        while (index <= s.length() - 1) {
-            char c = s.charAt(index);
-            if (c == '{') {
-                if (keyPairs.charAt(keyPairs.length()-1) == '='){
-                    keyPairs = keyPairs.substring(0, keyPairs.length()-2);
-                }
-                depth++;
-            }
-            if (c == '}') {
-                depth--;
-            }
-
-            if (depth == 0 && c != ' ' && c !='{' && c != '}'){
-                if (!(keyPairs.length() > 0 && keyPairs.charAt(keyPairs.length()-1) == ';' && c == ';')){
-                    keyPairs += c;
-                }
-            }
-
-            index++;
-        }
-
-        for (String pair : Arrays.asList(keyPairs.split(";"))) {
-            String[] splitted = pair.split("=");
-            String key = splitted[0].trim();
-            String val = splitted[1].trim();
-            m.put(key, val);
-        }
-
-
-        //        String answer = Arrays.asList(keyPairs.split("=")).stream().collect(Collectors.joining(" = "));
-//        answer = Arrays.asList(answer.split(";")).stream().collect(Collectors.joining("; |"));
-//
-//
-//        for (String pair: answer.split("\\|")){
-//            s = s.replace(pair, "");
-//        }
-
-
-
-//        System.out.println(answer);
-
-    }
-
-    public void test_getTopLevelPairs() {
-        String s = " x = y; k = q; a = map:{ b = map:{ t = f; poop = brown; tea = tasty; }; };  z = map:{ c = d}; p = 100; ";
-        Map m = new HashMap();
-        getTopLevelPairs(s, m);
-        System.out.println();
-    }
-
-    void recursive(String[] list) {
-        log(list);
-        for (String s : list) {
-            list = subMap(s);
-        }
-        System.out.println();
-    }
-
-    public void test_submap() {
-        String s = "map:{ x = y; k = q; a = map:{ b = map:{ t = f; poop = brown; tea = tasty; }; };  z = map:{ c = d}; };";
-        String[] ans = subMap(s);
-        assertEquals(" x = y; k = q; a = { b = { t = f; poop = brown; tea = tasty; }; };", ans[0]);
-        assertEquals("z = { c = d}; ", ans[1]);
-        log(ans[0]);
-        log(ans[1]);
-    }
-
-    public void test_b() {
-        String s = "map:{ x = y; k = q; a = map:{ b = map:{ t = f; poop = brown; tea = tasty; }; };  z = map:{ c = d}; p = 100; };";
-        //        String s1 = "map:{ x = y; k = q;}";
-        parse(new HashMap(), s);
-//        recursive(subMap(s));
-
-    }
-
     public void test_parseMap_flat() {
         List<StandardColorBox> standardColorBoxes = colorBoxList.stream()
                 .filter(x -> x instanceof StandardColorBox)
@@ -498,43 +315,38 @@ public class Step12StringStreamTest extends PlainTestCase {
                 .get(0)
                 .getContent());
 
-        //        parse(d.getText());
-        System.out.println();
-        //        log(d.getText());
+        log(mapParser(d.getText().toString(), 0, new HashMap()).m);
     }
 
     /**
      * What string of toString() is converted from text of SecretBox class in both middle and lower spaces on the "white" color-box to java.util.Map? <br>
      * (whiteのカラーボックスのmiddleおよびlowerスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
      */
-    // TODO tom こちらもStringをparseしてMapにしてみよう by もってぃ
+    // TODO Done tom こちらもStringをparseしてMapにしてみよう by もってぃ
     public void test_parseMap_nested() {
         List<StandardColorBox> standardColorBoxes = colorBoxList.stream()
                 .filter(x -> x instanceof StandardColorBox)
                 .map(x -> (StandardColorBox) x)
                 .collect(Collectors.toList());
-        //        YourPrivateRoom.SecretBox d = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream()
-        //                .filter(x -> x.getColor().getColorName().equals("white"))
-        //                .map(x -> x.getMiddleSpace())
-        //                .collect(Collectors.toList())
-        //                .get(0)
-        //                .getContent());
+        YourPrivateRoom.SecretBox d = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream()
+                .filter(x -> x.getColor().getColorName().equals("white"))
+                .map(x -> x.getMiddleSpace())
+                .collect(Collectors.toList())
+                .get(0)
+                .getContent());
         YourPrivateRoom.SecretBox d1 = (YourPrivateRoom.SecretBox) (standardColorBoxes.stream()
                 .filter(x -> x.getColor().getColorName().equals("white"))
                 .map(x -> x.getLowerSpace())
                 .collect(Collectors.toList())
                 .get(0)
                 .getContent());
-        //        log(d.getText());
-        //        log(d1.getText());
-        //
-
-        //        parse(d1.getText());
-        System.out.println();
+        log(d.getText());
+        log(d1.getText());
+        log(mapParser(d.getText().toString(), 0, new HashMap()).m);
+        log(mapParser(d1.getText().toString(), 0, new HashMap()).m);
     }
 
-
-    public void test_TestParser(){
+    public void test_TestParser() {
         Map m = new HashMap();
         m.put("a", "b");
         m.put("c", "d");
@@ -542,31 +354,29 @@ public class Step12StringStreamTest extends PlainTestCase {
         Map k = new HashMap();
         k.put("x", "y");
         k.put("z", "*");
-//
+
         Map p = new HashMap();
         p.put("q", k);
         m.put("t", p);
-//
+
         m.put("j", "k");
 
         String s = getPrettyMap(m, true);
 
         Map res = new HashMap();
 
-        mapParser(s, 0, res);
-        log(res);
+        log(mapParser(s, 0, res).m);
         log(s);
     }
 
-    Temp mapParser(String s, int i, Map inputMap){
+    Temp mapParser(String s, int i, Map inputMap) {
         s = s.replace("map:", "");
-        s = s.replace(" ","");
-        String keyPairs = "";
-        while (i < s.length()){
+        s = s.replace(" ", "");
+        StringBuilder keyPairs = new StringBuilder();
+        while (i < s.length()) {
             char c = s.charAt(i);
-            if (c == '}' ){
-
-                List<String> l = Arrays.asList(keyPairs.trim().split(";"));
+            if (c == '}') {
+                List<String> l = Arrays.asList(keyPairs.toString().trim().split(";"));
                 Collections.sort(l, new Comparator<String>() {
                     @Override
                     public int compare(String o1, String o2) {
@@ -575,31 +385,25 @@ public class Step12StringStreamTest extends PlainTestCase {
                 });
                 for (String x : l) {
                     String[] pair = x.split("=");
-                    if (pair.length == 1){
+                    if (pair.length == 1) {
                         Map newMap = new HashMap();
                         newMap.put(pair[0], inputMap);
                         inputMap = newMap;
-                    }
-                    else{
+                    } else {
                         inputMap.put(pair[0].trim(), pair[1].trim());
                     }
                 }
-
                 return new Temp(i, inputMap);
             }
-            if (c == '{'){
+            if (c == '{') {
                 Temp t = mapParser(s, i + 1, new HashMap());
                 i = t.index;
                 inputMap = t.m;
-            }
-            else{
-                keyPairs += c;
+            } else {
+                keyPairs.append(c);
             }
             i++;
         }
-        log(inputMap);
         return new Temp(i, inputMap);
-
-
     }
 }
