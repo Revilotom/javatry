@@ -60,7 +60,6 @@ public class SimpleDiContainer extends Dog {
     }
 
     public void resolveDependency() {
-        System.out.println("@@@: " + componentMap.keySet());
         componentMap.values().forEach(component -> {
             injectDependency(componentMap, component);
         });
