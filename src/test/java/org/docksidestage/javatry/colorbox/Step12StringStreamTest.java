@@ -270,7 +270,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * What string is converted to style "map:{ key = value ; key = value ; ... }" from java.util.Map in color-boxes? <br>
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = value ; ... }" という形式で表示すると？)
      */
-    // TODO Done tom 今は、MapのtoStringによって "{1-Day Passport=7400, Starlight Passport=5400,... }" というフォーマットで出力されているけど、
+    // Done tom 今は、MapのtoStringによって "{1-Day Passport=7400, Starlight Passport=5400,... }" というフォーマットで出力されているけど、
     //          これを "map:{ 1-Day Passport = 7400 ; Starlight Passport = 5400 ; ... }"というフォーマットで出力してみよう by もってぃ
     public void test_showMap_flat() {
         cleanContent.stream().filter(x -> x instanceof LinkedHashMap).map(x -> getPrettyMap((Map) x, false)).forEach(x -> log(x));
@@ -289,7 +289,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * What string is converted to style "map:{ key = value ; key = map:{ key = value ; ... } ; ... }" from java.util.Map in color-boxes? <br>
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = map:{ key = value ; ... } ; ... }" という形式で表示すると？)
      */
-    // TODO Done tom こちらも上と同じフォーマットで出力してみよう by もってぃ
+    // Done tom こちらも上と同じフォーマットで出力してみよう by もってぃ
     public void test_showMap_nested() {
         cleanContent.stream().filter(x -> x instanceof LinkedHashMap).map(x -> getPrettyMap((Map) x, true)).forEach(x -> log(x));
     }
@@ -301,7 +301,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * What string of toString() is converted from text of SecretBox class in upper space on the "white" color-box to java.util.Map? <br>
      * (whiteのカラーボックスのupperスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
      */
-    // TODO Done tom Stringの "map:{ dockside = over ; hangar = mystic ; broadway = bbb }" として出力するのではなく、
+    // Done tom Stringの "map:{ dockside = over ; hangar = mystic ; broadway = bbb }" として出力するのではなく、
     //          Stringをparseして Map にしてみよう。(おそらく "{dockside=over,hangar=mystic,broadway=bbb}"と出力されるはず?) by もってぃ
     public void test_parseMap_flat() {
         List<StandardColorBox> standardColorBoxes = colorBoxList.stream()
@@ -322,7 +322,7 @@ public class Step12StringStreamTest extends PlainTestCase {
      * What string of toString() is converted from text of SecretBox class in both middle and lower spaces on the "white" color-box to java.util.Map? <br>
      * (whiteのカラーボックスのmiddleおよびlowerスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
      */
-    // TODO Done tom こちらもStringをparseしてMapにしてみよう by もってぃ
+    // Done tom こちらもStringをparseしてMapにしてみよう by もってぃ
     public void test_parseMap_nested() {
         List<StandardColorBox> standardColorBoxes = colorBoxList.stream()
                 .filter(x -> x instanceof StandardColorBox)
