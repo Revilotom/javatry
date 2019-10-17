@@ -136,7 +136,7 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
      * Execute accessor and annotation and delegating actions by UsingDiWebFrameworkProcess. <br>
      * (accessor, annotation, delegating の Action を UsingDiWebFrameworkProcess 経由で実行してみましょう)
      */
-    public void test_usingdi_UsingDiWebFrameworkProcess() {
+    public void test_usingdi_UsingDiWebFrameworkProcess() throws Exception {
         // execution code here
         SimpleDiContainer container = SimpleDiContainer.getInstance();
         container.registerModule(new UsingDiModule());
@@ -144,6 +144,11 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
 
         UsingDiWebFrameworkProcess web = new UsingDiWebFrameworkProcess();
         web.requestAccessorCallFriend();
+        web.requestAccessorGoToOffice();
+
+        web.requestAnnotationCallFriend();
+
+
     }
 
     /**
@@ -153,6 +158,9 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
     public void test_usingdi_whatis_animal() {
         // your answer? => 
         // and your confirmation code here freely
+
+
+
     }
 
     // ===================================================================================
