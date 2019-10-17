@@ -38,8 +38,7 @@ public class TicketBooth {
     //                                                                           Attribute
     //                                                                           =========
     private int quantity = MAX_QUANTITY;
-    // TODO Tom never used なのは消してしまおう by katashin 2019/10/17
-    private int twoDayQuantity = MAX_TWO_DAY;
+    // TODO Done Tom never used なのは消してしまおう by katashin 2019/10/17
     private Integer salesProceeds;
 
     // ===================================================================================
