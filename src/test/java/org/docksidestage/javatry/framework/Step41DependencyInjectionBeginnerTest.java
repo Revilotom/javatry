@@ -169,8 +169,17 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
      * (UsingDiAnnotationAction のインスタンス変数 "animal" の実体クラスは？ (UsingDiModuleを登録した時))
      */
     public void test_usingdi_whatis_animal() {
-        // your answer? => 
+        // your answer? => Too lazy dog
         // and your confirmation code here freely
+
+
+
+        SimpleDiContainer container = SimpleDiContainer.getInstance();
+        container.registerModule(new UsingDiModule());
+        container.resolveDependency();
+
+        UsingDiWebFrameworkProcess web = new UsingDiWebFrameworkProcess();
+        web.requestAccessorCallFriend();
 
 
 
@@ -186,6 +195,9 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
     public void test_whatis_DIContainer() {
         // your answer? => 
         // and your confirmation code here freely
+
+        // A DI Container is a class that binds Classes to instances of those classes.
+        // The members of the variables will be copied to the class when the DI is resolved.
     }
 
     // ===================================================================================
