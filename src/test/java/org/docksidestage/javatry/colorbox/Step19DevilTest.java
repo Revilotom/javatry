@@ -31,7 +31,7 @@ import org.docksidestage.unit.PlainTestCase;
  * The test of Devil with color-box, (try if you woke up Devil in StringTest) <br>
  * Show answer by log() for question of javadoc.
  * @author jflute
- * @author your_name_here
+ * @author Tom Oliver
  */
 public class Step19DevilTest extends PlainTestCase {
     List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();

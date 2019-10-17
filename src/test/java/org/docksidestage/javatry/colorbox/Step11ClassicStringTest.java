@@ -31,7 +31,7 @@ import org.docksidestage.unit.PlainTestCase;
  * o don't fix the YourPrivateRoom class and color-box classes
  * </pre>
  * @author jflute
- * @author your_name_here
+ * @author Tom Oliver
  */
 public class Step11ClassicStringTest extends PlainTestCase {
 

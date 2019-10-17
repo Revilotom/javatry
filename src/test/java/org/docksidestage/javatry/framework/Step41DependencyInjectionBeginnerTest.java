@@ -15,13 +15,20 @@
  */
 package org.docksidestage.javatry.framework;
 
+import org.docksidestage.bizfw.di.container.MyContainer;
+import org.docksidestage.bizfw.di.container.SimpleDiContainer;
+import org.docksidestage.bizfw.di.nondi.NonDiDirectFirstAction;
+import org.docksidestage.bizfw.di.nondi.NonDiDirectSecondAction;
+import org.docksidestage.bizfw.di.usingdi.UsingDiWebFrameworkProcess;
+import org.docksidestage.bizfw.di.usingdi.settings.UsingDiModule;
+import org.docksidestage.javatry.colorbox.Temp;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
  * The test of Dependency Injection (DI) as beginner level. <br>
  * Show answer by log() or write answer on comment for question of javadoc.
  * @author jflute
- * @author your_name_here
+ * @author Tom Oliver
  */
 public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
 
@@ -36,7 +43,10 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
         // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
         // What is Dependency Injection?
         // - - - - - (your answer?)
-        //
+
+        // To pass the dependencies of a class as parameters to it either at instantiation (constructor injection)
+        // or via setter methods (setter injection)
+
         //
         //
         // _/_/_/_/_/_/_/_/_/_/
@@ -52,6 +62,23 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
     public void test_nondi_difference_between_first_and_second() {
         // your answer? => 
         // and your confirmation code here freely
+
+        // It has totally different method implementations.
+
+        NonDiDirectFirstAction f = new NonDiDirectFirstAction();
+        f.wakeupMe();
+
+        log("no error");
+
+        try{
+
+            NonDiDirectSecondAction s = new NonDiDirectSecondAction();
+            s.wakeupMe();
+        }
+        catch (Exception e){
+            log("threw an error");
+        }
+
     }
 
     /**
@@ -59,8 +86,11 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
      * (NonDiDirectSecondAction と NonDiFactoryMethodAction の違いは？)
      */
     public void test_nondi_difference_between_second_and_FactoryMethod() {
-        // your answer? => 
-        // and your confirmation code here freely
+        // your answer? =>
+        // In the factory method class, the repeated code for petting the dog etc. is extracted
+        // into a new method called createAnimal, its the same for createSuperCarDealer
+
+
     }
 
     /**
@@ -69,7 +99,8 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
      */
     public void test_nondi_difference_between_FactoryMethod_and_IndividualFactory() {
         // your answer? => 
-        // and your confirmation code here freely
+        // the createAnimal method has been extracted to the "NonDiAnimalFactory" class.
+        // same with createSuperCarDealer
     }
 
     // ===================================================================================
@@ -82,6 +113,8 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
     public void test_usingdi_difference_between_Accessor_and_Annotation() {
         // your answer? => 
         // and your confirmation code here freely
+        // In the accessor action, the dependencies animal and supercar dealer are injected via the setter methods
+        // in the annotation class the dependencies to be injected are marked with annotations.
     }
 
     /**
@@ -91,6 +124,9 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
     public void test_usingdi_difference_between_Annotation_and_Delegating() {
         // your answer? => 
         // and your confirmation code here freely
+
+        // The delegation class contains only the Bark method from the dog and the orderSuperCarMethod
+        // from the superCar process.
     }
 
     // ===================================================================================
@@ -102,6 +138,12 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
      */
     public void test_usingdi_UsingDiWebFrameworkProcess() {
         // execution code here
+        SimpleDiContainer container = SimpleDiContainer.getInstance();
+        container.registerModule(new UsingDiModule());
+        container.resolveDependency();
+
+        UsingDiWebFrameworkProcess web = new UsingDiWebFrameworkProcess();
+        web.requestAccessorCallFriend();
     }
 
     /**
