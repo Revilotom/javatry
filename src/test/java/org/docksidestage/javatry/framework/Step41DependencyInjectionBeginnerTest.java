@@ -15,6 +15,7 @@
  */
 package org.docksidestage.javatry.framework;
 
+import org.docksidestage.bizfw.basic.objanimal.Cat;
 import org.docksidestage.bizfw.di.container.MyContainer;
 import org.docksidestage.bizfw.di.container.SimpleDiContainer;
 import org.docksidestage.bizfw.di.nondi.NonDiDirectFirstAction;
@@ -140,17 +141,27 @@ public class Step41DependencyInjectionBeginnerTest extends PlainTestCase {
      */
     public void test_usingdi_UsingDiWebFrameworkProcess() throws Exception {
         // execution code here
+
+        UsingDiModule modified = new UsingDiModule(){
+            @Override
+            protected Cat createPlayingCat() {
+                return new Cat(){
+                    @Override
+                    protected void downHitPoint() {}
+                };
+            }
+        };
+
         SimpleDiContainer container = SimpleDiContainer.getInstance();
-        container.registerModule(new UsingDiModule());
+        container.registerModule(modified);
         container.resolveDependency();
 
         UsingDiWebFrameworkProcess web = new UsingDiWebFrameworkProcess();
         web.requestAccessorCallFriend();
-        web.requestAccessorGoToOffice();
 
         web.requestAnnotationCallFriend();
 
-
+        web.requestDelegatingCallFriend();
     }
 
     /**
