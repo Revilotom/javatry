@@ -38,6 +38,7 @@ public class TicketBooth {
     //                                                                           Attribute
     //                                                                           =========
     private int quantity = MAX_QUANTITY;
+    // TODO Tom never used なのは消してしまおう by katashin 2019/10/17
     private int twoDayQuantity = MAX_TWO_DAY;
     private Integer salesProceeds;
 
@@ -45,10 +46,10 @@ public class TicketBooth {
     //                                                                         Constructor
     //                                                                         ===========
     public TicketBooth() {
-        // TODO Done Tom In this case, null of salesProceeds had meaning but erased already. write reason why you erased. by katashin (2019/10/09)
+        // Done Tom In this case, null of salesProceeds had meaning but erased already. write reason why you erased. by katashin (2019/10/09)
         // 消されてしまったけど、salesProceeds の nullに意味があったね。 理由を書いてほしい。
         // Because I dont want to have to check if its initialised or not, it doesn't make sense to have "null" salesProceeds.
-        // TODO Done Tom IntelliJ mentions warning below code. keep in mind to solve warnings.
+        // Done Tom IntelliJ mentions warning below code. keep in mind to solve warnings.
         // IntelliJが警告を出しているね。消すように心がけてみよう。
         // Ok
         salesProceeds = 0;

@@ -26,7 +26,7 @@ import org.docksidestage.unit.PlainTestCase;
  * @author jflute
  * @author Tom Oliver
  */
-// TODO tom add your name to @author. fix it on other files. by katashin (2019/10/09)
+// done tom add your name to @author. fix it on other files. by katashin (2019/10/09)
 // @author に自分の名前を書きましょう。他のファイルもよろしくね。
 public class Step05ClassTest extends PlainTestCase {
 
@@ -112,7 +112,7 @@ public class Step05ClassTest extends PlainTestCase {
         // comment out after making the method
         TicketBooth booth = new TicketBooth();
         int money = 14000;
-        // TODO Done tom remove comment and fix to work it by katashin (2019/10/09)
+        // done tom remove comment and fix to work it by katashin (2019/10/09)
         // ここはコメントを外して、動くように修正しましょう
         TicketBuyResult res = booth.buyTwoDayPassport(money);
         Integer sea = booth.getSalesProceeds() + res.getChange();
@@ -202,13 +202,13 @@ public class Step05ClassTest extends PlainTestCase {
         oneDayTicket.doinPark();
         try {
             oneDayTicket.doinPark();
-            // TODO Done [challenge] tom using fail() is better, and think why it is better, and write reason. by katashin (2019/10/09)
+            // done [challenge] tom using fail() is better, and think why it is better, and write reason. by katashin (2019/10/09)
             // fail()メソッドを使うともっと良いと思う。理由も考えて書いてみて欲しい by katashin (2019/10/09)
 
             // This is to make sure that the code above always throws an exception and does not ever execute the line below.
             fail("Should never get here");
         } catch (IllegalStateException e) {
-            // TODO Done [challenge] tom using log() is better. and think why it is better, and write reason. by katashin (2019/10/09)
+            // done [challenge] tom using log() is better. and think why it is better, and write reason. by katashin (2019/10/09)
             // log()メソッドを使うともっと良いと思う。理由も考えてみて欲しい
 
             // A logger can be used to, for example, redirect output to a file or transform objects into different formats like JSON/XML.
