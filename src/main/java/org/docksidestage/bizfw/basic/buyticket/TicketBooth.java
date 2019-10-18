@@ -38,7 +38,7 @@ public class TicketBooth {
     //                                                                           Attribute
     //                                                                           =========
     private int quantity = MAX_QUANTITY;
-    // TODO Done Tom never used なのは消してしまおう by katashin 2019/10/17
+    // Done Tom never used なのは消してしまおう by katashin 2019/10/17
     private Integer salesProceeds;
 
     // ===================================================================================
@@ -63,7 +63,7 @@ public class TicketBooth {
         quantityMap.put(4, 10);
     }
 
-    // TODO Done 今のcodeだとOneDayとTwoDayのチケットしか買うことができない...。FourDayのチケットも買えるようにしてみよう by もってぃ
+    // Done 今のcodeだとOneDayとTwoDayのチケットしか買うことができない...。FourDayのチケットも買えるようにしてみよう by もってぃ
     private void buyPassportLogic(int money, int days) throws Exception {
         if (!quantityMap.containsKey(days) || !priceMap.containsKey(days)) {
             throw new Exception("Unknown ticket day count");
